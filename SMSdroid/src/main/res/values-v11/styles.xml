@@ -12,5 +12,10 @@
         <item name="android:background">?android:attr/dividerHorizontal</item>
         <item name="android:visibility">visible</item>
     </style>
+    <style name="Theme.SherlockSMSdroid" parent="style/Theme.Sherlock">
+        <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
+        <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar</item>
+        <item name="ubButtonBarBackground">@color/ubActionBarBackgroundDark</item>
+    </style>
 
 </resources>

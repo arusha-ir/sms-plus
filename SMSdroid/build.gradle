@@ -23,7 +23,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 22
     }
-
+/*
     signingConfigs {
         if (project.hasProperty("releaseKeystorePassword")) {
             release {
@@ -52,7 +52,7 @@ android {
             }
         }
     }
-
+*/
     lintOptions {
         abortOnError false
     }

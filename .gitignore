@@ -18,3 +18,12 @@ gradlew
 wiki
 gradle.properties
 release.ks
+/gradlew.bat
+
+/SMSdroid/src/main/res/drawable-hdpi/Thumbs.db
+
+/SMSdroid/src/main/res/drawable-ldpi/Thumbs.db
+
+/SMSdroid/src/main/res/drawable-mdpi/Thumbs.db
+
+/SMSdroid/src/main/res/drawable-xhdpi/Thumbs.db
