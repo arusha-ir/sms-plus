@@ -41,7 +41,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
@@ -470,9 +469,9 @@ public final class ConversationListActivity extends SherlockActivity implements
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         getSupportMenuInflater().inflate(R.menu.conversationlist, menu);
-        if (DonationHelper.hideAds(this)) {
-            menu.removeItem(R.id.item_donate);
-        }
+//        if (true) {
+//            menu.removeItem(R.id.item_donate);
+//        }
         return true;
     }
 
@@ -509,13 +508,13 @@ public final class ConversationListActivity extends SherlockActivity implements
                     startActivity(new Intent(this, PreferencesActivity.class));
                 }
                 return true;
-            case R.id.item_donate:
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, DonationHelper.DONATOR_URI));
-                } catch (ActivityNotFoundException e) {
-                    Log.e(TAG, "error opening play store with donation app", e);
-                }
-                return true;
+//            case R.id.item_donate:
+//                try {
+//                    startActivity(new Intent(Intent.ACTION_VIEW, DonationHelper.DONATOR_URI));
+//                } catch (ActivityNotFoundException e) {
+//                    Log.e(TAG, "error opening play store with donation app", e);
+//                }
+//                return true;
             case R.id.item_delete_all_threads:
                 deleteMessages(this, Uri.parse("content://sms/"), R.string.delete_threads_,
                         R.string.delete_threads_question, null);
