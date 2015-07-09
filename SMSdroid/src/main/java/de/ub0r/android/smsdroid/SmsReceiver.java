@@ -24,13 +24,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -44,11 +38,11 @@ import android.provider.CallLog.Calls;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.SmsMessage;
 import android.util.TypedValue;
+import de.ub0r.android.logg0r.Log;
+import ir.arusha.android.sms_plus.filter.FilterManager;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import de.ub0r.android.logg0r.Log;
 
 /**
  * Listen for new sms.
@@ -62,85 +56,64 @@ public class SmsReceiver extends BroadcastReceiver {
      * Tag for logging.
      */
     static final String TAG = "bcr";
-
-    /**
-     * {@link Uri} to get messages from.
-     */
-    private static final Uri URI_SMS = Uri.parse("content://sms/");
-
-    /**
-     * {@link Uri} to get messages from.
-     */
-    private static final Uri URI_MMS = Uri.parse("content://mms/");
-
-    /**
-     * Intent.action for receiving SMS.
-     */
-    private static final String ACTION_SMS_OLD = "android.provider.Telephony.SMS_RECEIVED";
-
-    private static final String ACTION_SMS_NEW = "android.provider.Telephony.SMS_DELIVER";
-
-    /**
-     * Intent.action for receiving MMS.
-     */
-    private static final String ACTION_MMS_OLD = "android.provider.Telephony.WAP_PUSH_RECEIVED";
-
-    private static final String ACTION_MMS_MEW = "android.provider.Telephony.WAP_PUSH_DELIVER";
-
-    /**
-     * An unreadable MMS body.
-     */
-    private static final String MMS_BODY = "<MMS>";
-
-    /**
-     * Index: thread id.
-     */
-    private static final int ID_TID = 0;
-
-    /**
-     * Index: count.
-     */
-    private static final int ID_COUNT = 1;
-
-    /**
-     * Sort the newest message first.
-     */
-    private static final String SORT = Calls.DATE + " DESC";
-
-    /**
-     * Delay for spinlock, waiting for new messages.
-     */
-    private static final long SLEEP = 500;
-
-    /**
-     * Number of maximal spins.
-     */
-    private static final int MAX_SPINS = 15;
-
-    /**
-     * ID for new message notification.
-     */
-    private static final int NOTIFICATION_ID_NEW = 1;
-
-    /**
-     * Last unread message's date.
-     */
-    private static long lastUnreadDate = 0L;
-
-    /**
-     * Last unread message's body.
-     */
-    private static String lastUnreadBody = null;
-
     /**
      * Red lights.
      */
     static final int RED = 0xFFFF0000;
-
-    @Override
-    public final void onReceive(final Context context, final Intent intent) {
-        handleOnReceive(this, context, intent);
-    }
+    /**
+     * {@link Uri} to get messages from.
+     */
+    private static final Uri URI_SMS = Uri.parse("content://sms/");
+    /**
+     * {@link Uri} to get messages from.
+     */
+    private static final Uri URI_MMS = Uri.parse("content://mms/");
+    /**
+     * Intent.action for receiving SMS.
+     */
+    private static final String ACTION_SMS_OLD = "android.provider.Telephony.SMS_RECEIVED";
+    private static final String ACTION_SMS_NEW = "android.provider.Telephony.SMS_DELIVER";
+    /**
+     * Intent.action for receiving MMS.
+     */
+    private static final String ACTION_MMS_OLD = "android.provider.Telephony.WAP_PUSH_RECEIVED";
+    private static final String ACTION_MMS_MEW = "android.provider.Telephony.WAP_PUSH_DELIVER";
+    /**
+     * An unreadable MMS body.
+     */
+    private static final String MMS_BODY = "<MMS>";
+    /**
+     * Index: thread id.
+     */
+    private static final int ID_TID = 0;
+    /**
+     * Index: count.
+     */
+    private static final int ID_COUNT = 1;
+    /**
+     * Sort the newest message first.
+     */
+    private static final String SORT = Calls.DATE + " DESC";
+    /**
+     * Delay for spinlock, waiting for new messages.
+     */
+    private static final long SLEEP = 500;
+    /**
+     * Number of maximal spins.
+     */
+    private static final int MAX_SPINS = 15;
+    /**
+     * ID for new message notification.
+     */
+    private static final int NOTIFICATION_ID_NEW = 1;
+    /**
+     * Last unread message's date.
+     */
+    private static long lastUnreadDate = 0L;
+    /**
+     * Last unread message's body.
+     */
+    private static String lastUnreadBody = null;
 
     static void handleOnReceive(final BroadcastReceiver receiver, final Context context,
             final Intent intent) {
@@ -205,15 +178,10 @@ public class SmsReceiver extends BroadcastReceiver {
                         }
                     }
 
-                    final SpamDB db = new SpamDB(context);
-                    db.open();
-                    if (db.isInDB(smsMessage[0].getOriginatingAddress())) {
+                    if (FilterManager.isFiltered(smsMessage[0].getOriginatingAddress(), false)) {
                         Log.d(TAG, "Message from ", s, " filtered.");
                         silent = true;
-                    } else {
-                        Log.d(TAG, "Message from ", s, " NOT filtered.");
-                    }
-                    db.close();
+                    } else Log.d(TAG, "Message from ", s, " NOT filtered.");
 
                     if (action.equals(ACTION_SMS_NEW)) {
                         // API19+: save message to the database
@@ -254,7 +222,6 @@ public class SmsReceiver extends BroadcastReceiver {
         wakelock.release();
         Log.i(TAG, "wakelock released");
     }
-
 
     /**
      * Get unread SMS.
@@ -671,5 +638,10 @@ public class SmsReceiver extends BroadcastReceiver {
         } else {
             updateFailedNotification(context, uri);
         }
+    }
+
+    @Override
+    public final void onReceive(final Context context, final Intent intent) {
+        handleOnReceive(this, context, intent);
     }
 }

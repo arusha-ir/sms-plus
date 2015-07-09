@@ -1,21 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    Copyright (C) 2009-2015 Felix Bechstein
--->
-<!--
-    This file is part of SMSdroid. This program is free software; you can
-    redistribute it and/or modify it under the terms of the GNU General
-    Public License as published by the Free Software Foundation; either
-    version 3 of the License, or (at your option) any later version.
--->
-<!--
-    This program is distributed in the hope that it will be useful, but
-    WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-    General Public License for more details. You should have received a
-    copy of the GNU General Public License along with this program; If
-    not, see <http://www.gnu.org/licenses/>.
--->
 <resources>
     <string name="about_">درباره</string>
     <string name="about_hint">درباره این برنامه</string>
@@ -23,7 +6,7 @@
     <string name="feedback_">بازخورد</string>
     <string name="feedback_hint">باگ‌ها را گزارش دهید، ویژگی‌هایی را درخواست کنید.</string>
     <string name="google_plus_hint">مار را در Google+ دنبال کنید.\nیادآوری‌های آپدیت را بگیرید و ...</string>
-    <string name="about0">پیامرسان آروشا نمی‌گذارد پیامک‌های تبلیغاتی شما را خسته کنند.</string>
+    <string name="about0">SMS+ نمی‌گذارد پیامک‌های تبلیغاتی شما را خسته کنند.</string>
     <string name="more_apps_">برنامه‌های بیشتر</string>
     <string name="settings">تنظیمات</string>
     <string name="new_message_">پیام جدید</string>
@@ -84,8 +67,8 @@
     <string name="view_contact_">نمایش مخاطب</string>
     <string name="add_contact_">افزودن به مخاطبین</string>
     <string name="view_thread_">نمایش نخ</string>
-    <string name="filter_spam_">علامت‌گذاری به عنوان اسپم</string>
-    <string name="dont_filter_spam_">پاک کردن از سیاهه</string>
+    <string name="filter_spam_">افزودن به لیست سیاه</string>
+    <string name="dont_filter_spam_">حذف از لیست سیاه</string>
     <string name="delete_message_">پایک کردن پیام</string>
     <string name="delete_thread_">پاک کردن نخ</string>
     <string name="forward_">بازارسال</string>
@@ -162,7 +145,7 @@
     <string name="decode_decimal_ncr_">رمزگشایی ده‌دهی NCR</string>
     <string name="decode_decimal_ncr_hint">بعضی از سرویس‌دهندگان پیامک را با رمزگشایی ده‌دهی NCR ارسال می‌کنند(&amp;#0000;). برای رمزگشایی خودکار این مورد را فعال کنید.</string>
     <string name="activate_sender_">ارسال‌کننده را فعال‌کنید</string>
-    <string name="activate_sender_hint">ارسال‌کننده پیام SMSdroid را فعال کنید.</string>
+    <string name="activate_sender_hint">ارسال‌کننده پیام SMS+ را فعال کنید.</string>
     <string name="fix_numbers_">اصلاح اعداد</string>
     <string name="fix_numbers_hint">ارسال کردن بخش‌های یک شماره با یک عبارت منظم قبل از ارسال. بیشتر کاربران نیاز ندارند که این مورد را تغییر دهند.</string>
     <string name="fix_number1_regex_">عبارت منظم 1</string>
@@ -211,12 +194,17 @@
     <string name="edit_short_text_hint">ورودی را به عنوان یک پیام کوتاه در نظر بگیر. وقتی فعال باشد صفحه‌کلید همیشه سرخط‌ها را با دکمه شکلک جایگزین می‌کند.</string>
     <string name="permission_save_to_db">پیام‌ها را در پایگاه داده ذخیره کن.</string>
     <string name="permission_save_to_db_description">پیام‌هایی که با برنامه‌های دیگر ارسال می‌شوند را در پایگاه داده اندوید ذخیره کن</string>
-    <string name="not_default_app">پیامرسان آروشا برنامه پیامرسانی پیش‌فرض شما نیست.</string>
-    <string name="not_default_app_message">نیاز است پیامرسان آروشا را به عنوان برنامه پیش‌فرض انتخاب کنید تا عملکرد درستی داشته باشد.</string>
+    <string name="not_default_app">SMS+ برنامه پیامرسانی پیش‌فرض شما نیست.</string>
+    <string name="not_default_app_message">نیاز است SMS+ را به عنوان برنامه پیش‌فرض انتخاب کنید تا عملکرد درستی داشته
+        باشد.
+    </string>
     <string name="forwarded_sms_clean_">پیام کوتاه دریافتی را تغییر بده</string>
     <string name="forwarded_sms_clean_hint">ارسال کننده در پیام کوتاه دریافتی را بر اساس "([0-9a-zA-Z]+):" تغییر می‌دهد و آن شماره را به عنوان ارسال کننده استفاده می کند.</string>
     <string name="error_unknown">ایراد ناشناخته</string>
     <string name="donate_remove_ads_">اهدا/حذف تبلیغات</string>
-    <string name="show_filtered_messages_">پیام‌های فیلتر شده را نمایش بده</string>
-
+    <string name="show_filtered_messages_">تغییر فیلتر</string>
+    <string name="click_again_to_filter">برای فیلتر شدن پیام‌ها دوباره کلیک کنید.</string>
+    <string name="click_again_to_unfilter">برای نمایش همه پیام‌ها دوباره کلیک کنید.</string>
+    <string name="add_to_white_list">اضافه کردن به لیست سفید</string>
+    <string name="remove_from_white_list">حذف کردن از لیست سفید</string>
 </resources>

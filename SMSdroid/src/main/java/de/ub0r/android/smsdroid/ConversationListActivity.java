@@ -18,21 +18,11 @@
  */
 package de.ub0r.android.smsdroid;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.content.ActivityNotFoundException;
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
@@ -45,22 +35,20 @@ import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.view.Window;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
+import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.GridView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import java.util.Calendar;
-
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
 import de.ub0r.android.logg0r.Log;
+import ir.arusha.android.sms_plus.filter.FilterManager;
+
+import java.util.Calendar;
 
 /**
  * Main {@link SherlockActivity} showing conversations.
@@ -74,85 +62,268 @@ public final class ConversationListActivity extends SherlockActivity implements
      * Tag for output.
      */
     public static final String TAG = "main";
-
-    /**
-     * ORIG_URI to resolve.
-     */
-    static final Uri URI = Uri.parse("content://mms-sms/conversations/");
-
-    /**
-     * Number of items.
-     */
-    private static final int WHICH_N = 6;
-
-    /**
-     * Index in dialog: answer.
-     */
-    private static final int WHICH_ANSWER = 0;
-
-    /**
-     * Index in dialog: answer.
-     */
-    private static final int WHICH_CALL = 1;
-
-    /**
-     * Index in dialog: view/add contact.
-     */
-    private static final int WHICH_VIEW_CONTACT = 2;
-
-    /**
-     * Index in dialog: view.
-     */
-    private static final int WHICH_VIEW = 3;
-
-    /**
-     * Index in dialog: delete.
-     */
-    private static final int WHICH_DELETE = 4;
-
-    /**
-     * Index in dialog: mark as spam.
-     */
-    private static final int WHICH_MARK_SPAM = 5;
-
     /**
      * Minimum date.
      */
     public static final long MIN_DATE = 10000000000L;
-
     /**
      * Miliseconds per seconds.
      */
     public static final long MILLIS = 1000L;
-
+    /**
+     * ORIG_URI to resolve.
+     */
+    static final Uri URI = Uri.parse("content://mms-sms/conversations/");
+    /**
+     * Number of items.
+     */
+    private static final int WHICH_N = 7;
+    /**
+     * Index in dialog: answer.
+     */
+    private static final int WHICH_ANSWER = 0;
+    /**
+     * Index in dialog: answer.
+     */
+    private static final int WHICH_CALL = 1;
+    /**
+     * Index in dialog: view/add contact.
+     */
+    private static final int WHICH_VIEW_CONTACT = 2;
+    /**
+     * Index in dialog: view.
+     */
+    private static final int WHICH_VIEW = 3;
+    /**
+     * Index in dialog: delete.
+     */
+    private static final int WHICH_DELETE = 4;
+    /**
+     * Index in dialog: mark as spam.
+     */
+    private static final int WHICH_MARK_SPAM = 5;
+    /**
+     * Index in dialog: mark as white listed.
+     */
+    private static final int WHICH_MARK_WHITE_LIST = 6;
+    /**
+     * {@link Calendar} holding today 00:00.
+     */
+    private static final Calendar CAL_DAYAGO = Calendar.getInstance();
     /**
      * Show contact's photo.
      */
     public static boolean showContactPhoto = false;
-
     /**
      * Show emoticons in {@link MessageListActivity}.
      */
     public static boolean showEmoticons = false;
 
+    static {
+        // Get time for now - 24 hours
+        CAL_DAYAGO.add(Calendar.DAY_OF_MONTH, -1);
+    }
+
     /**
      * Dialog items shown if an item was long clicked.
      */
     private String[] longItemClickDialog = null;
-
     /**
      * Conversations.
      */
     private ConversationAdapter adapter = null;
 
     /**
-     * {@link Calendar} holding today 00:00.
+     * Show all rows of a particular {@link Uri}.
+     *
+     * @param context {@link Context}
+     * @param u       {@link Uri}
      */
-    private static final Calendar CAL_DAYAGO = Calendar.getInstance();
+    @SuppressWarnings("UnusedDeclaration")
+    static void showRows(final Context context, final Uri u) {
+        Log.d(TAG, "-----GET HEADERS-----");
+        Log.d(TAG, "-- ", u.toString(), " --");
+        Cursor c = context.getContentResolver().query(u, null, null, null, null);
+        if (c != null) {
+            int l = c.getColumnCount();
+            StringBuilder buf = new StringBuilder();
+            for (int i = 0; i < l; i++) {
+                buf.append(i).append(":");
+                buf.append(c.getColumnName(i));
+                buf.append(" | ");
+            }
+            Log.d(TAG, buf.toString());
+        }
 
-    static {
-        // Get time for now - 24 hours
-        CAL_DAYAGO.add(Calendar.DAY_OF_MONTH, -1);
+    }
+
+    /**
+     * Show rows for debugging purposes.
+     *
+     * @param context {@link Context}
+     */
+    static void showRows(@SuppressWarnings("UnusedParameters") final Context context) {
+        // showRows(ContactsWrapper.getInstance().getUriFilter());
+        // showRows(context, URI);
+        // showRows(context, Uri.parse("content://sms/"));
+        // showRows(context, Uri.parse("content://mms/"));
+        // showRows(context, Uri.parse("content://mms/part/"));
+        // showRows(context, ConversationProvider.CONTENT_URI);
+        // showRows(context, Uri.parse("content://mms-sms/threads"));
+        // showRows(Uri.parse(MessageList.URI));
+    }
+
+    /**
+     * Mark all messages with a given {@link Uri} as read.
+     *
+     * @param context {@link Context}
+     * @param uri     {@link Uri}
+     * @param read    read status
+     */
+    static void markRead(final Context context, final Uri uri, final int read) {
+        Log.d(TAG, "markRead(", uri, ",", read, ")");
+        if (uri == null) {
+            return;
+        }
+        String[] sel = Message.SELECTION_UNREAD;
+        if (read == 0) {
+            sel = Message.SELECTION_READ;
+        }
+        final ContentResolver cr = context.getContentResolver();
+        final ContentValues cv = new ContentValues();
+        cv.put(Message.PROJECTION[Message.INDEX_READ], read);
+        try {
+            cr.update(uri, cv, Message.SELECTION_READ_UNREAD, sel);
+        } catch (IllegalArgumentException | SQLiteException e) {
+            Log.e(TAG, "failed update", e);
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+        SmsReceiver.updateNewMessageNotification(context, null);
+    }
+
+    /**
+     * Delete messages with a given {@link Uri}.
+     *
+     * @param context  {@link Context}
+     * @param uri      {@link Uri}
+     * @param title    title of Dialog
+     * @param message  message of the Dialog
+     * @param activity {@link Activity} to finish when deleting.
+     */
+    static void deleteMessages(final Context context, final Uri uri, final int title,
+                               final int message, final Activity activity) {
+        Log.i(TAG, "deleteMessages(..,", uri, " ,..)");
+        final Builder builder = new Builder(context);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setNegativeButton(android.R.string.no, null);
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(final DialogInterface dialog, final int which) {
+                try {
+                    final int ret = context.getContentResolver().delete(uri, null, null);
+                    Log.d(TAG, "deleted: ", ret);
+                    if (activity != null && !activity.isFinishing()) {
+                        activity.finish();
+                    }
+                    if (ret > 0) {
+                        Conversation.flushCache();
+                        Message.flushCache();
+                        SmsReceiver.updateNewMessageNotification(context, null);
+                    }
+                } catch (IllegalArgumentException e) {
+                    Log.e(TAG, "Argument Error", e);
+                    Toast.makeText(context, R.string.error_unknown, Toast.LENGTH_LONG).show();
+                } catch (SQLiteException e) {
+                    Log.e(TAG, "SQL Error", e);
+                    Toast.makeText(context, R.string.error_unknown, Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+        builder.show();
+    }
+
+    /**
+     * Add or remove an entry to/from blacklist.
+     *
+     * @param addr address
+     */
+    private static void addToOrRemoveFromSpamlist(final String addr) {
+        if (!FilterManager.isInBlackList(addr)) {
+            FilterManager.addToBlackList(addr);
+            Log.d(TAG, "Added ", addr, " to spam list");
+        } else {
+            FilterManager.removeFromBlackList(addr);
+            Log.d(TAG, "Removed ", addr, " from spam list");
+        }
+    }
+
+    private static void addToOrRemoveFromWhiteList(final String addr) {
+        if (!FilterManager.isInWhiteList(addr)) {
+            FilterManager.addToWhiteList(addr);
+            Log.d(TAG, "Added ", addr, " to white list");
+        } else {
+            FilterManager.removeFromWhiteList(addr);
+            Log.d(TAG, "Removed ", addr, " from white list");
+        }
+    }
+
+    /**
+     * Get a {@link Intent} for sending a new message.
+     *
+     * @param context     {@link Context}
+     * @param address     address
+     * @param showChooser show chooser
+     * @return {@link Intent}
+     */
+    static Intent getComposeIntent(final Context context, final String address,
+                                   final boolean showChooser) {
+        Intent i = null;
+
+        if (!showChooser && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // Search for WebSMS
+            PackageManager pm = context.getPackageManager();
+            i = pm == null ? null : pm.getLaunchIntentForPackage("de.ub0r.android.websms");
+        }
+
+        if (i == null) {
+            Log.d(TAG, "WebSMS is not installed!");
+            i = new Intent(Intent.ACTION_SENDTO);
+        }
+
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        if (address == null) {
+            i.setData(Uri.parse("sms:"));
+        } else {
+            i.setData(Uri.parse("smsto:" + PreferencesActivity.fixNumber(context, address)));
+        }
+
+        return i;
+    }
+
+    /**
+     * Convert time into formated date.
+     *
+     * @param context {@link Context}
+     * @param time    time
+     * @return formated date.
+     */
+    static String getDate(final Context context, final long time) {
+        long t = time;
+        if (t < MIN_DATE) {
+            t *= MILLIS;
+        }
+        if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+                PreferencesActivity.PREFS_FULL_DATE, false)) {
+            return DateFormat.getTimeFormat(context).format(t) + " "
+                    + DateFormat.getDateFormat(context).format(t);
+        } else if (t < CAL_DAYAGO.getTimeInMillis()) {
+            return DateFormat.getDateFormat(context).format(t);
+        } else {
+            return DateFormat.getTimeFormat(context).format(t);
+        }
     }
 
     /**
@@ -197,46 +368,6 @@ public final class ConversationListActivity extends SherlockActivity implements
             ((ListView) v).setAdapter(la);
         }
 
-    }
-
-    /**
-     * Show all rows of a particular {@link Uri}.
-     *
-     * @param context {@link Context}
-     * @param u       {@link Uri}
-     */
-    @SuppressWarnings("UnusedDeclaration")
-    static void showRows(final Context context, final Uri u) {
-        Log.d(TAG, "-----GET HEADERS-----");
-        Log.d(TAG, "-- ", u.toString(), " --");
-        Cursor c = context.getContentResolver().query(u, null, null, null, null);
-        if (c != null) {
-            int l = c.getColumnCount();
-            StringBuilder buf = new StringBuilder();
-            for (int i = 0; i < l; i++) {
-                buf.append(i).append(":");
-                buf.append(c.getColumnName(i));
-                buf.append(" | ");
-            }
-            Log.d(TAG, buf.toString());
-        }
-
-    }
-
-    /**
-     * Show rows for debugging purposes.
-     *
-     * @param context {@link Context}
-     */
-    static void showRows(@SuppressWarnings("UnusedParameters") final Context context) {
-        // showRows(ContactsWrapper.getInstance().getUriFilter());
-        // showRows(context, URI);
-        // showRows(context, Uri.parse("content://sms/"));
-        // showRows(context, Uri.parse("content://mms/"));
-        // showRows(context, Uri.parse("content://mms/part/"));
-        // showRows(context, ConversationProvider.CONTENT_URI);
-        // showRows(context, Uri.parse("content://mms-sms/threads"));
-        // showRows(Uri.parse(MessageList.URI));
     }
 
     /**
@@ -291,6 +422,7 @@ public final class ConversationListActivity extends SherlockActivity implements
         longItemClickDialog[WHICH_VIEW] = getString(R.string.view_thread_);
         longItemClickDialog[WHICH_DELETE] = getString(R.string.delete_thread_);
         longItemClickDialog[WHICH_MARK_SPAM] = getString(R.string.filter_spam_);
+        longItemClickDialog[WHICH_MARK_WHITE_LIST] = getString(R.string.add_to_white_list);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             try {
@@ -354,96 +486,6 @@ public final class ConversationListActivity extends SherlockActivity implements
     }
 
     /**
-     * Mark all messages with a given {@link Uri} as read.
-     *
-     * @param context {@link Context}
-     * @param uri     {@link Uri}
-     * @param read    read status
-     */
-    static void markRead(final Context context, final Uri uri, final int read) {
-        Log.d(TAG, "markRead(", uri, ",", read, ")");
-        if (uri == null) {
-            return;
-        }
-        String[] sel = Message.SELECTION_UNREAD;
-        if (read == 0) {
-            sel = Message.SELECTION_READ;
-        }
-        final ContentResolver cr = context.getContentResolver();
-        final ContentValues cv = new ContentValues();
-        cv.put(Message.PROJECTION[Message.INDEX_READ], read);
-        try {
-            cr.update(uri, cv, Message.SELECTION_READ_UNREAD, sel);
-        } catch (IllegalArgumentException | SQLiteException e) {
-            Log.e(TAG, "failed update", e);
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-        SmsReceiver.updateNewMessageNotification(context, null);
-    }
-
-    /**
-     * Delete messages with a given {@link Uri}.
-     *
-     * @param context  {@link Context}
-     * @param uri      {@link Uri}
-     * @param title    title of Dialog
-     * @param message  message of the Dialog
-     * @param activity {@link Activity} to finish when deleting.
-     */
-    static void deleteMessages(final Context context, final Uri uri, final int title,
-            final int message, final Activity activity) {
-        Log.i(TAG, "deleteMessages(..,", uri, " ,..)");
-        final Builder builder = new Builder(context);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.setNegativeButton(android.R.string.no, null);
-        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(final DialogInterface dialog, final int which) {
-                try {
-                    final int ret = context.getContentResolver().delete(uri, null, null);
-                    Log.d(TAG, "deleted: ", ret);
-                    if (activity != null && !activity.isFinishing()) {
-                        activity.finish();
-                    }
-                    if (ret > 0) {
-                        Conversation.flushCache();
-                        Message.flushCache();
-                        SmsReceiver.updateNewMessageNotification(context, null);
-                    }
-                } catch (IllegalArgumentException e) {
-                    Log.e(TAG, "Argument Error", e);
-                    Toast.makeText(context, R.string.error_unknown, Toast.LENGTH_LONG).show();
-                } catch (SQLiteException e) {
-                    Log.e(TAG, "SQL Error", e);
-                    Toast.makeText(context, R.string.error_unknown, Toast.LENGTH_LONG).show();
-                }
-
-            }
-        });
-        builder.show();
-    }
-
-    /**
-     * Add or remove an entry to/from blacklist.
-     *
-     * @param context {@link Context}
-     * @param addr    address
-     */
-    private static void addToOrRemoveFromSpamlist(final Context context, final String addr) {
-        final SpamDB db = new SpamDB(context);
-        db.open();
-        if (!db.isInDB(addr)) {
-            db.insertNr(addr);
-            Log.d(TAG, "Added ", addr, " to spam list");
-        } else {
-            db.removeNr(addr);
-            Log.d(TAG, "Removed ", addr, " from spam list");
-        }
-        db.close();
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -482,50 +524,26 @@ public final class ConversationListActivity extends SherlockActivity implements
                 markRead(this, Uri.parse("content://sms/"), 1);
                 markRead(this, Uri.parse("content://mms/"), 1);
                 return true;
+            case R.id.item_filter:
+                FilterManager.toggleShowAll();
+                restartActivity();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    /**
-     * Get a {@link Intent} for sending a new message.
-     *
-     * @param context     {@link Context}
-     * @param address     address
-     * @param showChooser show chooser
-     * @return {@link Intent}
-     */
-    static Intent getComposeIntent(final Context context, final String address,
-            final boolean showChooser) {
-        Intent i = null;
-
-        if (!showChooser && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // Search for WebSMS
-            PackageManager pm = context.getPackageManager();
-            i = pm == null ? null : pm.getLaunchIntentForPackage("de.ub0r.android.websms");
-        }
-
-        if (i == null) {
-            Log.d(TAG, "WebSMS is not installed!");
-            i = new Intent(Intent.ACTION_SENDTO);
-        }
-
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        if (address == null) {
-            i.setData(Uri.parse("sms:"));
-        } else {
-            i.setData(Uri.parse("smsto:" + PreferencesActivity.fixNumber(context, address)));
-        }
-
-        return i;
+    private void restartActivity() {
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
     }
 
     /**
      * {@inheritDoc}
      */
     public void onItemClick(final AdapterView<?> parent, final View view, final int position,
-            final long id) {
+                            final long id) {
         final Conversation c = Conversation.getConversation(this,
                 (Cursor) parent.getItemAtPosition(position), false);
         final Uri target = c.getUri();
@@ -545,7 +563,7 @@ public final class ConversationListActivity extends SherlockActivity implements
      * {@inheritDoc}
      */
     public boolean onItemLongClick(final AdapterView<?> parent, final View view,
-            final int position, final long id) {
+                                   final int position, final long id) {
         final Conversation c = Conversation.getConversation(this,
                 (Cursor) parent.getItemAtPosition(position), true);
         final Uri target = c.getUri();
@@ -562,13 +580,14 @@ public final class ConversationListActivity extends SherlockActivity implements
         } else {
             builder.setTitle(n);
         }
-        final SpamDB db = new SpamDB(getApplicationContext());
-        db.open();
-        if (db.isInDB(a)) {
+        if (FilterManager.isInBlackList(a)) {
             items = items.clone();
             items[WHICH_MARK_SPAM] = getString(R.string.dont_filter_spam_);
         }
-        db.close();
+        if (FilterManager.isInWhiteList(a)) {
+            items = items.clone();
+            items[WHICH_MARK_WHITE_LIST] = getString(R.string.remove_from_white_list);
+        }
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(final DialogInterface dialog, final int which) {
@@ -608,7 +627,13 @@ public final class ConversationListActivity extends SherlockActivity implements
                             break;
                         case WHICH_MARK_SPAM:
                             ConversationListActivity.addToOrRemoveFromSpamlist(
-                                    ConversationListActivity.this, c.getContact().getNumber());
+                                    c.getContact().getNumber());
+                            restartActivity();
+                            break;
+                        case WHICH_MARK_WHITE_LIST:
+                            ConversationListActivity.addToOrRemoveFromWhiteList(
+                                    c.getContact().getNumber());
+                            restartActivity();
                             break;
                         default:
                             break;
@@ -622,28 +647,5 @@ public final class ConversationListActivity extends SherlockActivity implements
         });
         builder.create().show();
         return true;
-    }
-
-    /**
-     * Convert time into formated date.
-     *
-     * @param context {@link Context}
-     * @param time    time
-     * @return formated date.
-     */
-    static String getDate(final Context context, final long time) {
-        long t = time;
-        if (t < MIN_DATE) {
-            t *= MILLIS;
-        }
-        if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-                PreferencesActivity.PREFS_FULL_DATE, false)) {
-            return DateFormat.getTimeFormat(context).format(t) + " "
-                    + DateFormat.getDateFormat(context).format(t);
-        } else if (t < CAL_DAYAGO.getTimeInMillis()) {
-            return DateFormat.getDateFormat(context).format(t);
-        } else {
-            return DateFormat.getTimeFormat(context).format(t);
-        }
     }
 }

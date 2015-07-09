@@ -27,6 +27,11 @@
             android:showAsAction="ifRoom|withText"
             android:title="@string/mark_all_read_"/>
     <item
+            android:id="@+id/item_filter"
+            android:icon="@drawable/ic_menu_view"
+            android:showAsAction="always|withText"
+            android:title="@string/show_filtered_messages_"/>
+    <item
             android:id="@+id/item_delete_all_threads"
             android:icon="@android:drawable/ic_menu_delete"
             android:title="@string/delete_threads_"/>

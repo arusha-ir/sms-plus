@@ -23,7 +23,7 @@
     <string name="feedback_">Feedback</string>
     <string name="feedback_hint">Report bugs, request features ...</string>
     <string name="google_plus_hint">Follow me on Google+.\nGet update notifications etc.</string>
-    <string name="about0">SMSdroid lets you read your sms and write sms with any other app.</string>
+    <string name="about0">SMS+ lets you read your sms and write sms with any other app.</string>
     <string name="more_apps_">More Apps..</string>
     <string name="settings">Preferences</string>
     <string name="new_message_">New message</string>
@@ -84,8 +84,8 @@
     <string name="view_contact_">View contact</string>
     <string name="add_contact_">Add to contacts</string>
     <string name="view_thread_">View thread</string>
-    <string name="filter_spam_">Mark as Spam</string>
-    <string name="dont_filter_spam_">Remove from Blacklist</string>
+    <string name="filter_spam_">Add to black list</string>
+    <string name="dont_filter_spam_">Remove from black list</string>
     <string name="delete_message_">Delete message</string>
     <string name="delete_thread_">Delete thread</string>
     <string name="forward_">Forward</string>
@@ -162,7 +162,7 @@
     <string name="decode_decimal_ncr_">Decode Decimal NCR</string>
     <string name="decode_decimal_ncr_hint">Some providers deliver unicode messages encoded as decimal NCR (&amp;#0000;). Check to auto decode such entities.</string>
     <string name="activate_sender_">Activate sender</string>
-    <string name="activate_sender_hint">Activate SMSdroid\'s message sender.</string>
+    <string name="activate_sender_hint">Activate SMS+\'s message sender.</string>
     <string name="fix_numbers_">Fix numbers</string>
     <string name="fix_numbers_hint">Replace parts of a number with a regular expression before sending. Most users don\'t need to change this.</string>
     <string name="fix_number1_regex_">Regex 1</string>
@@ -211,12 +211,15 @@
     <string name="edit_short_text_hint">Consider input a short message. The keyboard usually replaces enter with smiley button if enabled.</string>
     <string name="permission_save_to_db">Save messages to database</string>
     <string name="permission_save_to_db_description">Save messages sent by other apps to android message database</string>
-    <string name="not_default_app">SMSdroid is not the default SMS app</string>
-    <string name="not_default_app_message">SMSdroid needs to be the default SMS app to work properly</string>
+    <string name="not_default_app">SMS+ is not the default SMS app</string>
+    <string name="not_default_app_message">SMS+ needs to be the default SMS app to work properly</string>
     <string name="forwarded_sms_clean_">Modify received sms</string>
     <string name="forwarded_sms_clean_hint">Strips sender in received sms according to "([0-9a-zA-Z]+):" and use that this number as sender.</string>
     <string name="error_unknown">Unknown error</string>
     <string name="donate_remove_ads_">Donate/remove ads</string>
-    <string name="show_filtered_messages_">Show Filtered Messages</string>
-
+    <string name="show_filtered_messages_">Toggle filtering</string>
+    <string name="click_again_to_filter">Click again to filter messages.</string>
+    <string name="click_again_to_unfilter">Click again to show all messages.</string>
+    <string name="add_to_white_list">Add to white list</string>
+    <string name="remove_from_white_list">Remove from white list</string>
 </resources>

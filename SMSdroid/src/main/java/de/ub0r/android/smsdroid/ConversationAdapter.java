@@ -34,10 +34,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
-
 import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
 import de.ub0r.android.logg0r.Log;
+import ir.arusha.android.sms_plus.filter.FilterCursorWrapper;
+import ir.arusha.android.sms_plus.filter.FilterManager;
 
 /**
  * Adapter for the list of {@link Conversation}s.
@@ -47,115 +48,49 @@ import de.ub0r.android.logg0r.Log;
 public class ConversationAdapter extends ResourceCursorAdapter {
 
     /**
-     * Tag for logging.
-     */
-    static final String TAG = "coa";
-
-    /**
      * Cursor's sort.
      */
     public static final String SORT = Calls.DATE + " DESC";
-
     /**
-     * Used text size, color.
+     * Tag for logging.
      */
-    private final int textSize, textColor;
-
-    /**
-     * {@link BackgroundQueryHandler}.
-     */
-    private final BackgroundQueryHandler queryHandler;
-
+    static final String TAG = "coa";
     /**
      * Token for {@link BackgroundQueryHandler}: message list query.
      */
     private static final int MESSAGE_LIST_QUERY_TOKEN = 0;
-
-    /**
-     * Reference to {@link ConversationListActivity}.
-     */
-    private final Activity activity;
-
-    /**
-     * List of blocked numbers.
-     */
-    private final String[] blacklist;
-
     /**
      * {@link ContactsWrapper}.
      */
     private static final ContactsWrapper WRAPPER = ContactsWrapper.getInstance();
-
     /**
-     * Default {@link Drawable} for {@link Contact}s.
+     * Used text size, color.
      */
-    private Drawable defaultContactAvatar = null;
-
+    private final int textSize, textColor;
+    /**
+     * {@link BackgroundQueryHandler}.
+     */
+    private final BackgroundQueryHandler queryHandler;
+    /**
+     * Reference to {@link ConversationListActivity}.
+     */
+    private final Activity activity;
     /**
      * Convert NCR.
      */
     private final boolean convertNCR;
-
     /**
      * Show emoticons as images
      */
     private final boolean showEmoticons;
-
     /**
      * Use grid instead of list.
      */
     private final boolean useGridLayout;
-
     /**
-     * View holder.
+     * Default {@link Drawable} for {@link Contact}s.
      */
-    private static class ViewHolder {
-
-        TextView tvBody;
-
-        TextView tvPerson;
-
-        TextView tvCount;
-
-        TextView tvDate;
-
-        ImageView ivPhoto;
-
-        View vRead;
-    }
-
-    /**
-     * Handle queries in background.
-     *
-     * @author flx
-     */
-    private final class BackgroundQueryHandler extends AsyncQueryHandler {
-
-        /**
-         * A helper class to help make handling asynchronous {@link ContentResolver} queries
-         * easier.
-         *
-         * @param contentResolver {@link ContentResolver}
-         */
-        public BackgroundQueryHandler(final ContentResolver contentResolver) {
-            super(contentResolver);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        protected void onQueryComplete(final int token, final Object cookie, final Cursor cursor) {
-            switch (token) {
-                case MESSAGE_LIST_QUERY_TOKEN:
-                    ConversationAdapter.this.changeCursor(cursor);
-                    ConversationAdapter.this.activity
-                            .setProgressBarIndeterminateVisibility(Boolean.FALSE);
-                    return;
-                default:
-            }
-        }
-    }
+    private Drawable defaultContactAvatar = null;
 
     /**
      * Default Constructor.
@@ -172,11 +107,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
             super.setViewResource(R.layout.conversation_square);
         }
         final ContentResolver cr = c.getContentResolver();
-        queryHandler = new BackgroundQueryHandler(cr);
-        SpamDB spam = new SpamDB(c);
-        spam.open();
-        blacklist = spam.getAllEntries();
-        spam.close();
+        queryHandler = new BackgroundQueryHandler(c.getBaseContext(), cr);
 
         defaultContactAvatar = c.getResources().getDrawable(R.drawable.ic_contact_picture);
 
@@ -329,14 +260,60 @@ public class ConversationAdapter extends ResourceCursorAdapter {
      * @return true if address is blocked
      */
     private boolean isBlocked(final String addr) {
-        if (addr == null) {
-            return false;
+        return FilterManager.isFiltered(addr, true);
+    }
+
+    /**
+     * View holder.
+     */
+    private static class ViewHolder {
+
+        TextView tvBody;
+
+        TextView tvPerson;
+
+        TextView tvCount;
+
+        TextView tvDate;
+
+        ImageView ivPhoto;
+
+        View vRead;
+    }
+
+    /**
+     * Handle queries in background.
+     *
+     * @author flx
+     */
+    private final class BackgroundQueryHandler extends AsyncQueryHandler {
+
+        final Context context;
+
+        /**
+         * A helper class to help make handling asynchronous {@link ContentResolver} queries
+         * easier.
+         *
+         * @param contentResolver {@link ContentResolver}
+         */
+        public BackgroundQueryHandler(final Context context, final ContentResolver contentResolver) {
+            super(contentResolver);
+            this.context = context;
         }
-        for (String aBlacklist : blacklist) {
-            if (addr.equals(aBlacklist)) {
-                return true;
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected void onQueryComplete(final int token, final Object cookie, final Cursor cursor) {
+            switch (token) {
+                case MESSAGE_LIST_QUERY_TOKEN:
+                    ConversationAdapter.this.changeCursor(new FilterCursorWrapper(context, cursor, true, Conversation.INDEX_SIMPLE_NID));
+                    ConversationAdapter.this.activity
+                            .setProgressBarIndeterminateVisibility(Boolean.FALSE);
+                    return;
+                default:
             }
         }
-        return false;
     }
 }

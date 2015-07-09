@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="replaces">
+        <item>^\\+98</item>
+        <item>0</item>
+        <item>\\-</item>
+        <item></item>
+    </string-array>
+
+    <string-array name="filters">
+        <item>(?=(^.{11,20}$))(^\\d+$)</item>
+    </string-array>
+
+    <string-array name="whiteNumbers">
+        <item>0200035</item>
+        <item>2000300</item>
+        <item>0990009</item>
+        <item>050001544</item>
+        <item>10988080</item>
+        <item>0988080</item>
+        <item>0988055</item>
+        <item>0988055</item>
+        <item>0200090</item>
+        <item>0300028103</item>
+        <item>02000313313</item>
+    </string-array>
+
+</resources>
