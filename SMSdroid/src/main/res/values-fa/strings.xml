@@ -53,8 +53,8 @@
     <string name="hide_send_hint">پنهان کردن دکمه ارسال کنار فیلد متن.</string>
     <string name="hide_restore_">پنهان کردن دکمه بازیابی آخرین پیام</string>
     <string name="hide_restore_hint">>پنهان کردن دکمه بازیابی آخرین پیام در لیست پیام‌ها.</string>
-    <string name="hide_paste_">پنهان کردن دکنه "چسباندن"</string>
-    <string name="hide_paste_hint">پنهان کردن دکنه "چسباندن" در فیلد متن.</string>
+    <string name="hide_paste_">پنهان کردن دکمه "چسباندن"</string>
+    <string name="hide_paste_hint">پنهان کردن دکمه "چسباندن" در فیلد متن.</string>
     <string name="hide_widget_label_">پنهان کردن برچسب ویجت</string>
     <string name="hide_widget_label_hint">پنهان کردن برچسب ویجت.</string>
     <string name="hide_delete_all_threads_">پنهان کردن پاک کردن همه نخ‌ها</string>

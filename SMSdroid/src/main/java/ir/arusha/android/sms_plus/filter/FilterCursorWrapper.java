@@ -4,6 +4,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 import de.ub0r.android.lib.apis.Contact;
+import de.ub0r.android.smsdroid.Conversation;
+import de.ub0r.android.smsdroid.ConversationListActivity;
+
+import java.util.HashMap;
 
 /**
  * Created by Majid on 7/9/2015.
@@ -13,6 +17,7 @@ public class FilterCursorWrapper extends CursorWrapper {
     private int[] index;
     private int count = 0;
     private int pos = 0;
+    private HashMap<Integer, String> contactCache = new HashMap<>();
 
     public FilterCursorWrapper(Context context, Cursor cursor, boolean doFilter, int column) {
         super(cursor);
@@ -38,9 +43,15 @@ public class FilterCursorWrapper extends CursorWrapper {
     }
 
     public boolean isHidden(String path) {
-        Contact contact = new Contact(Integer.parseInt(path));
-        contact.update(context, true, false);
-        return FilterManager.isFiltered(contact.getNumber(), false);
+        int contactId = Integer.parseInt(path);
+        final String number;
+        if (!contactCache.containsKey(contactId)) {
+            Contact contact = new Contact(contactId);
+            contact = Conversation.update(context, contact, ConversationListActivity.showContactPhoto);
+            number = contact.getNumber();
+            contactCache.put(contactId, number);
+        } else number = contactCache.get(contactId);
+        return FilterManager.isFiltered(number, false);
     }
 
     @Override

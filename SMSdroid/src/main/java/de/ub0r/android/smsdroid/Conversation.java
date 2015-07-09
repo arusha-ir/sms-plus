@@ -202,7 +202,7 @@ public final class Conversation {
      * @return {@link Conversation}
      */
     public static Conversation getConversation(final Context context, final Cursor cursor,
-            final boolean sync) {
+                                               final boolean sync) {
         Log.d(TAG, "getConversation(", sync, ")");
         synchronized (CACHE) {
             Conversation ret = CACHE.get(cursor.getInt(INDEX_SIMPLE_ID));
@@ -235,7 +235,7 @@ public final class Conversation {
      * @return {@link Conversation}
      */
     public static Conversation getConversation(final Context context, final int threadId,
-            final boolean forceUpdate) {
+                                               final boolean forceUpdate) {
         Log.d(TAG, "getConversation(", threadId, ")");
         synchronized (CACHE) {
             Conversation ret = CACHE.get(threadId);
@@ -267,6 +267,19 @@ public final class Conversation {
      */
     public static void invalidate() {
         validCache = System.currentTimeMillis();
+    }
+
+    public static Contact update(Context context, Contact contact, boolean loadAvatar) {
+        contact.update(context, false, loadAvatar);
+//        if(Conversation.loadAvatar != loadAvatar) {
+//            contactCache.clear();
+//            Conversation.loadAvatar = loadAvatar;
+//        }
+//        if (contactCache.containsKey(contact.getRecipientId()))
+//            return contactCache.get(contact.getRecipientId());
+//        contact.update(context, false, loadAvatar);
+//        contactCache.put(contact.getRecipientId(), contact);
+        return contact;
     }
 
     /**
@@ -384,6 +397,9 @@ public final class Conversation {
     public void setCount(final int c) {
         count = c;
     }
+
+//    private static HashMap<Long, Contact> contactCache = new HashMap<>();
+//    private static boolean loadAvatar = true;
 
     /**
      * @return {@link Uri} of this {@link Conversation}

@@ -20,10 +20,9 @@ package de.ub0r.android.smsdroid;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import de.ub0r.android.logg0r.Log;
 
 import java.util.concurrent.RejectedExecutionException;
-
-import de.ub0r.android.logg0r.Log;
 
 /**
  * @author flx
@@ -93,6 +92,15 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
     }
 
     /**
+     * Set {@link ConversationAdapter} to invalidate data after refreshing.
+     *
+     * @param a {@link ConversationAdapter}
+     */
+    public static void setAdapter(final ConversationAdapter a) {
+        adapter = a;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -102,8 +110,9 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
         }
         Log.d(TAG, "doInBackground()");
         try {
-            changed = conv.getContact().update(context, true,
-                    ConversationListActivity.showContactPhoto);
+            Conversation.update(context, conv.getContact(), ConversationListActivity.showContactPhoto);
+            //ConversationListActivity.showContactPhoto
+            changed = true;
         } catch (NullPointerException e) {
             Log.e(TAG, "error updating contact", e);
         }
@@ -118,14 +127,5 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
         if (changed && adapter != null) {
             adapter.notifyDataSetChanged();
         }
-    }
-
-    /**
-     * Set {@link ConversationAdapter} to invalidate data after refreshing.
-     *
-     * @param a {@link ConversationAdapter}
-     */
-    public static void setAdapter(final ConversationAdapter a) {
-        adapter = a;
     }
 }

@@ -164,7 +164,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
     @Override
     public final void bindView(final View view, final Context context, final Cursor cursor) {
         final Conversation c = Conversation.getConversation(context, cursor, false);
-        final Contact contact = c.getContact();
+        Contact contact = c.getContact();
 
         ViewHolder holder = (ViewHolder) view.getTag();
         if (holder == null) {
@@ -216,6 +216,9 @@ public class ConversationAdapter extends ResourceCursorAdapter {
         if (isBlocked(contact.getNumber())) {
             holder.tvPerson.setText("[" + contact.getDisplayName() + "]");
         } else {
+            if (contact.getContactId() == -1) {
+                contact = Conversation.update(context, contact, ConversationListActivity.showContactPhoto);
+            }
             holder.tvPerson.setText(contact.getDisplayName());
         }
 
