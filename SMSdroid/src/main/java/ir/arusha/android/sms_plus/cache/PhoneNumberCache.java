@@ -59,9 +59,9 @@ public class PhoneNumberCache {
     }
 
     public static void write() {
+        if (cacheFile == null) return;
+        if (!needWrite) return;
         synchronized (numbers) {
-            if (cacheFile == null) return;
-            if (!needWrite) return;
             BufferedWriter out = null;
             try {
                 out = new BufferedWriter(new FileWriter(cacheFile), 1024);

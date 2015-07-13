@@ -110,8 +110,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
         }
         Log.d(TAG, "doInBackground()");
         try {
-            Conversation.update(context, conv.getContact(), ConversationListActivity.showContactPhoto);
-            //ConversationListActivity.showContactPhoto
+            conv.getContact().update(context, true, ConversationListActivity.showContactPhoto);
             changed = true;
         } catch (NullPointerException e) {
             Log.e(TAG, "error updating contact", e);

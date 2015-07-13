@@ -217,7 +217,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
             holder.tvPerson.setText("[" + contact.getDisplayName() + "]");
         } else {
             if (contact.getContactId() == -1) {
-                contact = Conversation.update(context, contact, ConversationListActivity.showContactPhoto);
+                contact.update(context, true, ConversationListActivity.showContactPhoto);
             }
             holder.tvPerson.setText(contact.getDisplayName());
         }

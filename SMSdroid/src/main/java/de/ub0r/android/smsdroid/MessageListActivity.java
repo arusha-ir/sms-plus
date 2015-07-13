@@ -18,20 +18,8 @@
  */
 package de.ub0r.android.smsdroid;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-
 import android.app.AlertDialog.Builder;
-import android.content.ActivityNotFoundException;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -48,18 +36,13 @@ import android.text.format.DateFormat;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
+import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.google.android.gms.ads.AdView;
 import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.Contact;
@@ -74,88 +57,71 @@ import de.ub0r.android.logg0r.Log;
 public class MessageListActivity extends SherlockActivity implements OnItemClickListener,
         OnItemLongClickListener, OnClickListener, OnLongClickListener {
 
-    private static final String TAG = "ml";
-
-    /**
-     * {@link ContactsWrapper}.
-     */
-    private static final ContactsWrapper WRAPPER = ContactsWrapper.getInstance();
-
-    /**
-     * Number of items.
-     */
-    private static final int WHICH_N = 8;
-
-    /**
-     * Index in dialog: mark view/add contact.
-     */
-    private static final int WHICH_VIEW_CONTACT = 0;
-
-    /**
-     * Index in dialog: mark call contact.
-     */
-    private static final int WHICH_CALL = 1;
-
-    /**
-     * Index in dialog: mark read/unread.
-     */
-    private static final int WHICH_MARK_UNREAD = 2;
-
-    /**
-     * Index in dialog: reply.
-     */
-    private static final int WHICH_REPLY = 3;
-
-    /**
-     * Index in dialog: forward.
-     */
-    private static final int WHICH_FORWARD = 4;
-
-    /**
-     * Index in dialog: copy text.
-     */
-    private static final int WHICH_COPY_TEXT = 5;
-
-    /**
-     * Index in dialog: view details.
-     */
-    private static final int WHICH_VIEW_DETAILS = 6;
-
-    /**
-     * Index in dialog: delete.
-     */
-    private static final int WHICH_DELETE = 7;
-
-    /**
-     * maximum number of lines in EditText
-     */
-    private static final int MAX_EDITTEXT_LINES = 10;
-
-    /**
-     * Package name for System's chooser.
-     */
-    private static String chooserPackage = null;
-
-    /**
-     * Used {@link Uri}.
-     */
-    private Uri uri;
-
-    /**
-     * {@link Conversation} shown.
-     */
-    private Conversation conv = null;
-
     /**
      * ORIG_URI to resolve.
      */
     static final String URI = "content://mms-sms/conversations/";
-
+    private static final String TAG = "ml";
+    /**
+     * {@link ContactsWrapper}.
+     */
+    private static final ContactsWrapper WRAPPER = ContactsWrapper.getInstance();
+    /**
+     * Number of items.
+     */
+    private static final int WHICH_N = 8;
+    /**
+     * Index in dialog: mark view/add contact.
+     */
+    private static final int WHICH_VIEW_CONTACT = 0;
+    /**
+     * Index in dialog: mark call contact.
+     */
+    private static final int WHICH_CALL = 1;
+    /**
+     * Index in dialog: mark read/unread.
+     */
+    private static final int WHICH_MARK_UNREAD = 2;
+    /**
+     * Index in dialog: reply.
+     */
+    private static final int WHICH_REPLY = 3;
+    /**
+     * Index in dialog: forward.
+     */
+    private static final int WHICH_FORWARD = 4;
+    /**
+     * Index in dialog: copy text.
+     */
+    private static final int WHICH_COPY_TEXT = 5;
+    /**
+     * Index in dialog: view details.
+     */
+    private static final int WHICH_VIEW_DETAILS = 6;
+    /**
+     * Index in dialog: delete.
+     */
+    private static final int WHICH_DELETE = 7;
+    /**
+     * maximum number of lines in EditText
+     */
+    private static final int MAX_EDITTEXT_LINES = 10;
+    /**
+     * Package name for System's chooser.
+     */
+    private static String chooserPackage = null;
     /**
      * Dialog items shown if an item was long clicked.
      */
     private final String[] longItemClickDialog = new String[WHICH_N];
-
+    /**
+     * Used {@link Uri}.
+     */
+    private Uri uri;
+    /**
+     * {@link Conversation} shown.
+     */
+    private Conversation conv = null;
     /**
      * Marked a message unread?
      */
@@ -201,6 +167,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
      * True, to update {@link Contact}'s photo.
      */
     private boolean needContactUpdate = false;
+    private AdView mAdView;
 
     /**
      * Get {@link ListView}.
@@ -219,8 +186,6 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
     private void setListAdapter(final ListAdapter la) {
         getListView().setAdapter(la);
     }
-
-    private AdView mAdView;
 
     /**
      * {@inheritDoc}
@@ -290,14 +255,15 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
         mAdView = (AdView) findViewById(R.id.ads);
         mAdView.setVisibility(View.GONE);
         if (!DonationHelper.hideAds(this)) {
-            mAdView.loadAd(new AdRequest.Builder().build());
-            mAdView.setAdListener(new AdListener() {
-                @Override
-                public void onAdLoaded() {
-                    mAdView.setVisibility(View.VISIBLE);
-                    super.onAdLoaded();
-                }
-            });
+            //always remove ads
+//            mAdView.loadAd(new AdRequest.Builder().build());
+//            mAdView.setAdListener(new AdListener() {
+//                @Override
+//                public void onAdLoaded() {
+//                    mAdView.setVisibility(View.VISIBLE);
+//                    super.onAdLoaded();
+//                }
+//            });
         }
     }
 

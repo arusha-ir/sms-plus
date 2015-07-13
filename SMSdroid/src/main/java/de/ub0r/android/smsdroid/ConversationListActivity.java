@@ -469,6 +469,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         PhoneNumberCache.write();
     }
 
