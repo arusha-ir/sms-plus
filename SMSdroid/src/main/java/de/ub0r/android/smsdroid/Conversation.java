@@ -269,19 +269,6 @@ public final class Conversation {
         validCache = System.currentTimeMillis();
     }
 
-    public static Contact update(Context context, Contact contact, boolean loadAvatar) {
-        contact.update(context, false, loadAvatar);
-//        if(Conversation.loadAvatar != loadAvatar) {
-//            contactCache.clear();
-//            Conversation.loadAvatar = loadAvatar;
-//        }
-//        if (contactCache.containsKey(contact.getRecipientId()))
-//            return contactCache.get(contact.getRecipientId());
-//        contact.update(context, false, loadAvatar);
-//        contactCache.put(contact.getRecipientId(), contact);
-        return contact;
-    }
-
     /**
      * Update data.
      *
@@ -397,9 +384,6 @@ public final class Conversation {
     public void setCount(final int c) {
         count = c;
     }
-
-//    private static HashMap<Long, Contact> contactCache = new HashMap<>();
-//    private static boolean loadAvatar = true;
 
     /**
      * @return {@link Uri} of this {@link Conversation}

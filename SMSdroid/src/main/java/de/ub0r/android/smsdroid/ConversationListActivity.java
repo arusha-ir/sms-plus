@@ -45,6 +45,7 @@ import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
 import de.ub0r.android.logg0r.Log;
+import ir.arusha.android.sms_plus.cache.PhoneNumberCache;
 import ir.arusha.android.sms_plus.filter.FilterManager;
 
 import java.util.Calendar;
@@ -464,6 +465,11 @@ public final class ConversationListActivity extends SherlockActivity implements
         showContactPhoto = p.getBoolean(PreferencesActivity.PREFS_CONTACT_PHOTO, true);
         showEmoticons = p.getBoolean(PreferencesActivity.PREFS_EMOTICONS, false);
         adapter.startMsgListQuery();
+    }
+
+    @Override
+    protected void onDestroy() {
+        PhoneNumberCache.write();
     }
 
     @Override

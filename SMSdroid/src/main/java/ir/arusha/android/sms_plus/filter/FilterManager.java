@@ -17,15 +17,7 @@ public class FilterManager {
 
     static String[] filters;
     static String[][] replaces;
-
-    /**
-     * List of blocked numbers.
-     */
     static HashSet<String> blackList;
-
-    /**
-     * List of white list.
-     */
     static HashSet<String> whiteList;
     static boolean showAll = false;
     static Context context;
