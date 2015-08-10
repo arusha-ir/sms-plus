@@ -161,14 +161,27 @@
         </service>
 
 
-        <receiver android:name="de.ub0r.android.smsdroid.SmsReceiver" android:exported="true"
+        <receiver android:name="de.ub0r.android.smsdroid.SmsReceiver"
                   android:permission="android.permission.BROADCAST_SMS">
-
-            <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_DELIVER"/>
+            <intent-filter android:priority="2147483647">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
-
+            <intent-filter android:priority="2147483647">
+                <action android:name="android.provider.Telephony.GSM_SMS_RECEIVED"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.provider.Telephony.WAP_PUSH_RECEIVED"/>
+                <data android:mimeType="application/vnd.wap.mms-message"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.provider.Telephony.WAP_PUSH_GSM_RECEIVED"/>
+                <data android:mimeType="application/vnd.wap.mms-message"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.android.mms.transaction.MESSAGE_SENT"/>
+            </intent-filter>
         </receiver>
 
         <receiver android:name="de.ub0r.android.smsdroid.MmsReceiver" android:exported="true"
@@ -189,7 +202,7 @@
         </receiver>
 
         <receiver android:name="de.ub0r.android.smsdroid.NotificationBroadcastReceiver">
-            <intent-filter>
+            <intent-filter android:priority="999">
                 <action android:name="de.ub0r.android.smsdroid.MARK_READ"/>
             </intent-filter>
         </receiver>
@@ -217,7 +230,7 @@
                 android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
 
         <meta-data android:name="com.google.android.gms.version"
-                   android:value="@integer/google_play_services_version" />
+                   android:value="@integer/google_play_services_version"/>
 
         <meta-data
                 android:name="android.app.default_searchable"

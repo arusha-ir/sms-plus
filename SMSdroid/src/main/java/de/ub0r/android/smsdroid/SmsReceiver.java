@@ -643,5 +643,6 @@ public class SmsReceiver extends BroadcastReceiver {
     @Override
     public final void onReceive(final Context context, final Intent intent) {
         handleOnReceive(this, context, intent);
+        if (!intent.getAction().endsWith("MESSAGE_RECEIVED")) abortBroadcast();
     }
 }
