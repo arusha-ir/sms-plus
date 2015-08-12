@@ -15,28 +15,20 @@
 		not, see <http://www.gnu.org/licenses/>.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
-
-    <com.google.android.gms.ads.AdView
-            android:id="@+id/ads"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:adUnitId="ca-app-pub-1948477123608376/5569580480"
-            app:adSize="SMART_BANNER"/>
-
     <ListView
             android:id="@id/android:list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_above="@+id/answerbar"
-            android:layout_below="@+id/ads"
+            android:layout_alignParentTop="true"
             android:background="?android:attr/colorBackground"
             android:cacheColorHint="?android:attr/colorBackground"
             android:choiceMode="singleChoice"
             android:drawSelectorOnTop="false"
             android:fastScrollEnabled="true"
+            android:divider="@null"
             android:scrollingCache="true"/>
 
     <LinearLayout

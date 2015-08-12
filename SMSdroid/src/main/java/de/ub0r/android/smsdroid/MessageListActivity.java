@@ -42,8 +42,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.google.android.gms.ads.AdView;
-import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
@@ -167,7 +165,6 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
      * True, to update {@link Contact}'s photo.
      */
     private boolean needContactUpdate = false;
-    private AdView mAdView;
 
     /**
      * Get {@link ListView}.
@@ -251,20 +248,6 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
         longItemClickDialog[WHICH_COPY_TEXT] = getString(R.string.copy_text_);
         longItemClickDialog[WHICH_VIEW_DETAILS] = getString(R.string.view_details_);
         longItemClickDialog[WHICH_DELETE] = getString(R.string.delete_message_);
-
-        mAdView = (AdView) findViewById(R.id.ads);
-        mAdView.setVisibility(View.GONE);
-        if (!DonationHelper.hideAds(this)) {
-            //always remove ads
-//            mAdView.loadAd(new AdRequest.Builder().build());
-//            mAdView.setAdListener(new AdListener() {
-//                @Override
-//                public void onAdLoaded() {
-//                    mAdView.setVisibility(View.VISIBLE);
-//                    super.onAdLoaded();
-//                }
-//            });
-        }
     }
 
     /**
@@ -438,7 +421,6 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
     protected final void onResume() {
         super.onResume();
 
-        mAdView.resume();
         final ListView lv = getListView();
         lv.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         lv.setAdapter(new MessageAdapter(this, uri));
@@ -490,7 +472,6 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 
     @Override
     protected final void onPause() {
-        mAdView.pause();
         if (!markedUnread) {
             setRead();
         }
@@ -499,7 +480,6 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 
     @Override
     protected void onDestroy() {
-        mAdView.destroy();
         super.onDestroy();
     }
 

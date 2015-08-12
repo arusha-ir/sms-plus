@@ -33,16 +33,15 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.regex.PatternSyntaxException;
-
 import de.ub0r.android.lib.IPreferenceContainer;
 import de.ub0r.android.lib.Utils;
 import de.ub0r.android.logg0r.Log;
 import yuku.ambilwarna.AmbilWarnaDialog;
 import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Preferences.
@@ -52,185 +51,149 @@ import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
 public class PreferencesActivity extends PreferenceActivity implements IPreferenceContainer {
 
     /**
-     * Tag for logging.
-     */
-    static final String TAG = "prefs";
-
-    /**
-     * Preference's name: vibrate on receive.
-     */
-    static final String PREFS_VIBRATE = "receive_vibrate";
-
-    /**
-     * Preference's name: sound on receive.
-     */
-    static final String PREFS_SOUND = "receive_sound";
-
-    /**
-     * Preference's name: led color.
-     */
-    private static final String PREFS_LED_COLOR = "receive_led_color";
-
-    /**
-     * Preference's name: led flash.
-     */
-    private static final String PREFS_LED_FLASH = "receive_led_flash";
-
-    /**
-     * Preference's name: vibrator pattern.
-     */
-    private static final String PREFS_VIBRATOR_PATTERN = "receive_vibrate_mode";
-
-    /**
-     * Preference's name: enable notifications.
-     */
-    static final String PREFS_NOTIFICATION_ENABLE = "notification_enable";
-
-    /**
-     * Preference's name: hide sender/text in notifications.
-     */
-    static final String PREFS_NOTIFICATION_PRIVACY = "receive_privacy";
-
-    /**
-     * Preference's name: icon for notifications.
-     */
-    private static final String PREFS_NOTIFICATION_ICON = "notification_icon";
-
-    /**
-     * Prefernece's name: show contact's photo.
-     */
-    static final String PREFS_CONTACT_PHOTO = "show_contact_photo";
-
-    /**
-     * Prefernece's name: show emoticons in messagelist.
-     */
-    static final String PREFS_EMOTICONS = "show_emoticons";
-
-    /**
-     * Prefernece's name: show bubbles in messagelist.
-     */
-    static final String PREFS_BUBBLES = "show_bubbles";
-
-    /**
-     * Preference's name: bubbles for incoming messages.
-     */
-    private static final String PREFS_BUBBLES_IN = "bubbles_in";
-
-    /**
-     * Preference's name: bubbles for outgoing messages.
-     */
-    private static final String PREFS_BUBBLES_OUT = "bubbles_out";
-
-    /**
-     * Prefernece's name: show full date and time.
-     */
-    static final String PREFS_FULL_DATE = "show_full_date";
-
-    /**
-     * Prefernece's name: hide send button.
-     */
-    static final String PREFS_HIDE_SEND = "hide_send";
-
-    /**
-     * Preference's name: hide restore.
-     */
-    static final String PREFS_HIDE_RESTORE = "hide_restore";
-
-    /**
-     * Prefernece's name: hide paste button.
-     */
-    static final String PREFS_HIDE_PASTE = "hide_paste";
-
-    /**
-     * Prefernece's name: hide widget's label.
-     */
-    static final String PREFS_HIDE_WIDGET_LABEL = "hide_widget_label";
-
-    /**
-     * Prefernece's name: hide delete all threads.
-     */
-    static final String PREFS_HIDE_DELETE_ALL_THREADS = "hide_delete_all_threads";
-
-    /**
-     * Prefernece's name: hide message count.
-     */
-    static final String PREFS_HIDE_MESSAGE_COUNT = "hide_message_count";
-
-    /**
-     * Preference's name: theme.
-     */
-    private static final String PREFS_THEME = "theme";
-
-    /**
-     * Theme: black.
-     */
-    private static final String THEME_BLACK = "black";
-
-    /**
-     * Theme: light.
-     */
-    private static final String THEME_LIGHT = "light";
-
-    /**
-     * Preference's name: text size.
-     */
-    private static final String PREFS_TEXTSIZE = "textsizen";
-
-    /**
-     * Preference's name: text color.
-     */
-    private static final String PREFS_TEXTCOLOR = "textcolor";
-
-    /**
-     * Preference's name: ignore text color for list ov threads.
-     */
-    private static final String PREFS_TEXTCOLOR_IGNORE_CONV = "text_color_ignore_conv";
-
-    /**
      * Preference's name: enable autosend.
      */
     public static final String PREFS_ENABLE_AUTOSEND = "enable_autosend";
-
     /**
      * Preference's name: mobile_only.
      */
     public static final String PREFS_MOBILE_ONLY = "mobile_only";
-
     /**
      * Preference's name: edit_short_text.
      */
     public static final String PREFS_EDIT_SHORT_TEXT = "edit_short_text";
-
     /**
      * Preference's name: show text field.
      */
     public static final String PREFS_SHOWTEXTFIELD = "show_textfield";
-
     /**
      * Preference's name: show target app.
      */
     public static final String PREFS_SHOWTARGETAPP = "show_target_app";
-
     /**
      * Preference's name: backup of last sms.
      */
     public static final String PREFS_BACKUPLASTTEXT = "backup_last_sms";
-
     /**
      * Preference's name: decode decimal ncr.
      */
     public static final String PREFS_DECODE_DECIMAL_NCR = "decode_decimal_ncr";
-
     /**
      * Preference's name: activate sender.
      */
     public static final String PREFS_ACTIVATE_SENDER = "activate_sender";
-
     /**
      * Preference's name: forward sms sender.
      */
     public static final String PREFS_FORWARD_SMS_CLEAN = "forwarded_sms_clean";
-
+    /**
+     * Tag for logging.
+     */
+    static final String TAG = "prefs";
+    /**
+     * Preference's name: vibrate on receive.
+     */
+    static final String PREFS_VIBRATE = "receive_vibrate";
+    /**
+     * Preference's name: sound on receive.
+     */
+    static final String PREFS_SOUND = "receive_sound";
+    /**
+     * Preference's name: enable notifications.
+     */
+    static final String PREFS_NOTIFICATION_ENABLE = "notification_enable";
+    /**
+     * Preference's name: hide sender/text in notifications.
+     */
+    static final String PREFS_NOTIFICATION_PRIVACY = "receive_privacy";
+    /**
+     * Prefernece's name: show contact's photo.
+     */
+    static final String PREFS_CONTACT_PHOTO = "show_contact_photo";
+    /**
+     * Prefernece's name: show emoticons in messagelist.
+     */
+    static final String PREFS_EMOTICONS = "show_emoticons";
+    /**
+     * Prefernece's name: show bubbles in messagelist.
+     */
+    static final String PREFS_BUBBLES = "show_bubbles";
+    /**
+     * Prefernece's name: show full date and time.
+     */
+    static final String PREFS_FULL_DATE = "show_full_date";
+    /**
+     * Prefernece's name: hide send button.
+     */
+    static final String PREFS_HIDE_SEND = "hide_send";
+    /**
+     * Preference's name: hide restore.
+     */
+    static final String PREFS_HIDE_RESTORE = "hide_restore";
+    /**
+     * Prefernece's name: hide paste button.
+     */
+    static final String PREFS_HIDE_PASTE = "hide_paste";
+    /**
+     * Prefernece's name: hide widget's label.
+     */
+    static final String PREFS_HIDE_WIDGET_LABEL = "hide_widget_label";
+    /**
+     * Prefernece's name: hide delete all threads.
+     */
+    static final String PREFS_HIDE_DELETE_ALL_THREADS = "hide_delete_all_threads";
+    /**
+     * Prefernece's name: hide message count.
+     */
+    static final String PREFS_HIDE_MESSAGE_COUNT = "hide_message_count";
+    /**
+     * Preference's name: led color.
+     */
+    private static final String PREFS_LED_COLOR = "receive_led_color";
+    /**
+     * Preference's name: led flash.
+     */
+    private static final String PREFS_LED_FLASH = "receive_led_flash";
+    /**
+     * Preference's name: vibrator pattern.
+     */
+    private static final String PREFS_VIBRATOR_PATTERN = "receive_vibrate_mode";
+    /**
+     * Preference's name: icon for notifications.
+     */
+    private static final String PREFS_NOTIFICATION_ICON = "notification_icon";
+    /**
+     * Preference's name: bubbles for incoming messages.
+     */
+    private static final String PREFS_BUBBLES_IN = "bubbles_in";
+    /**
+     * Preference's name: bubbles for outgoing messages.
+     */
+    private static final String PREFS_BUBBLES_OUT = "bubbles_out";
+    /**
+     * Preference's name: theme.
+     */
+    private static final String PREFS_THEME = "theme";
+    /**
+     * Theme: black.
+     */
+    private static final String THEME_BLACK = "black";
+    /**
+     * Theme: light.
+     */
+    private static final String THEME_LIGHT = "light";
+    /**
+     * Preference's name: text size.
+     */
+    private static final String PREFS_TEXTSIZE = "textsizen";
+    /**
+     * Preference's name: text color.
+     */
+    private static final String PREFS_TEXTCOLOR = "textcolor";
+    /**
+     * Preference's name: ignore text color for list ov threads.
+     */
+    private static final String PREFS_TEXTCOLOR_IGNORE_CONV = "text_color_ignore_conv";
     /**
      * Preference's name: prefix regular expression.
      */
@@ -303,121 +266,6 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
             R.string.bubbles_purple_right, R.string.bubbles_white_left,
             R.string.bubbles_white_right, R.string.bubbles_yellow_left,
             R.string.bubbles_yellow_right,};
-
-    /**
-     * Listen to clicks on "notification icon" preferences.
-     *
-     * @author flx
-     */
-    private static class OnNotificationIconClickListener implements
-            Preference.OnPreferenceClickListener {
-
-        /**
-         * {@link Context}.
-         */
-        private final Context ctx;
-
-        /**
-         * Default constructor.
-         *
-         * @param context {@link Context}
-         */
-        public OnNotificationIconClickListener(final Context context) {
-            ctx = context;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean onPreferenceClick(final Preference preference) {
-            final Builder b = new Builder(ctx);
-            final int l = NOTIFICAION_STR.length;
-            final String[] cols = new String[]{"icon", "text"};
-            final ArrayList<HashMap<String, Object>> rows
-                    = new ArrayList<>();
-            for (int i = 0; i < l; i++) {
-                final HashMap<String, Object> m = new HashMap<>(2);
-                m.put(cols[0], NOTIFICAION_IMG[i]);
-                m.put(cols[1], ctx.getString(NOTIFICAION_STR[i]));
-                rows.add(m);
-            }
-            b.setAdapter(new SimpleAdapter(ctx, rows, R.layout.notification_icons_item, cols,
-                            new int[]{android.R.id.icon, android.R.id.text1}),
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(final DialogInterface dialog, final int which) {
-                            preference.getEditor().putInt(preference.getKey(), which).commit();
-                        }
-                    });
-            b.setNegativeButton(android.R.string.cancel, null);
-            b.show();
-            return true;
-        }
-    }
-
-    /**
-     * Listen to clicks on "bubble" preferences.
-     *
-     * @author flx
-     */
-    private static class OnBubblesClickListener implements Preference.OnPreferenceClickListener {
-
-        /**
-         * {@link Context}.
-         */
-        private final Context ctx;
-
-        /**
-         * Default constructor.
-         *
-         * @param context {@link Context}
-         */
-        public OnBubblesClickListener(final Context context) {
-            ctx = context;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean onPreferenceClick(final Preference preference) {
-            final Builder b = new Builder(ctx);
-            final int l = BUBBLES_STR.length;
-            final String[] cols = new String[]{"icon", "text"};
-            final ArrayList<HashMap<String, Object>> rows
-                    = new ArrayList<>();
-            for (int i = 0; i < l; i++) {
-                final HashMap<String, Object> m = new HashMap<>(2);
-                m.put(cols[0], BUBBLES_IMG[i]);
-                m.put(cols[1], ctx.getString(BUBBLES_STR[i]));
-                rows.add(m);
-            }
-            b.setAdapter(new SimpleAdapter(ctx, rows, R.layout.bubbles_item, cols, new int[]{
-                            android.R.id.icon, android.R.id.text1}),
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(final DialogInterface dialog, final int which) {
-                            preference.getEditor().putInt(preference.getKey(), which).commit();
-                        }
-                    });
-            b.setNegativeButton(android.R.string.cancel, null);
-            b.show();
-            return true;
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.prefs_appearance_behavior);
-        addPreferencesFromResource(R.xml.prefs_about);
-
-        registerOnPreferenceClickListener(this);
-    }
 
     /**
      * Register {@link OnPreferenceClickListener}.
@@ -595,11 +443,11 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
      */
     static int getBubblesIn(final Context context) {
         final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
-        final int i = p.getInt(PREFS_BUBBLES_IN, R.drawable.bubble_old_turquoise_left);
+        final int i = p.getInt(PREFS_BUBBLES_IN, R.drawable.bubble_blue_right);
         if (i >= 0 && i < BUBBLES_IMG.length) {
             return BUBBLES_IMG[i];
         }
-        return R.drawable.bubble_old_turquoise_left;
+        return R.drawable.bubble_blue_right;
     }
 
     /**
@@ -610,11 +458,11 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
      */
     static int getBubblesOut(final Context context) {
         final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
-        final int i = p.getInt(PREFS_BUBBLES_OUT, R.drawable.bubble_old_green_right);
+        final int i = p.getInt(PREFS_BUBBLES_OUT, R.drawable.bubble_white_left);
         if (i >= 0 && i < BUBBLES_IMG.length) {
             return BUBBLES_IMG[i];
         }
-        return R.drawable.bubble_old_green_right;
+        return R.drawable.bubble_white_left;
     }
 
     /**
@@ -667,6 +515,18 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
      * {@inheritDoc}
      */
     @Override
+    public final void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.prefs_appearance_behavior);
+        addPreferencesFromResource(R.xml.prefs_about);
+
+        registerOnPreferenceClickListener(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public final boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -694,5 +554,108 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
     @Override
     public final Context getContext() {
         return this;
+    }
+
+    /**
+     * Listen to clicks on "notification icon" preferences.
+     *
+     * @author flx
+     */
+    private static class OnNotificationIconClickListener implements
+            Preference.OnPreferenceClickListener {
+
+        /**
+         * {@link Context}.
+         */
+        private final Context ctx;
+
+        /**
+         * Default constructor.
+         *
+         * @param context {@link Context}
+         */
+        public OnNotificationIconClickListener(final Context context) {
+            ctx = context;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean onPreferenceClick(final Preference preference) {
+            final Builder b = new Builder(ctx);
+            final int l = NOTIFICAION_STR.length;
+            final String[] cols = new String[]{"icon", "text"};
+            final ArrayList<HashMap<String, Object>> rows
+                    = new ArrayList<>();
+            for (int i = 0; i < l; i++) {
+                final HashMap<String, Object> m = new HashMap<>(2);
+                m.put(cols[0], NOTIFICAION_IMG[i]);
+                m.put(cols[1], ctx.getString(NOTIFICAION_STR[i]));
+                rows.add(m);
+            }
+            b.setAdapter(new SimpleAdapter(ctx, rows, R.layout.notification_icons_item, cols,
+                            new int[]{android.R.id.icon, android.R.id.text1}),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(final DialogInterface dialog, final int which) {
+                            preference.getEditor().putInt(preference.getKey(), which).commit();
+                        }
+                    });
+            b.setNegativeButton(android.R.string.cancel, null);
+            b.show();
+            return true;
+        }
+    }
+
+    /**
+     * Listen to clicks on "bubble" preferences.
+     *
+     * @author flx
+     */
+    private static class OnBubblesClickListener implements Preference.OnPreferenceClickListener {
+
+        /**
+         * {@link Context}.
+         */
+        private final Context ctx;
+
+        /**
+         * Default constructor.
+         *
+         * @param context {@link Context}
+         */
+        public OnBubblesClickListener(final Context context) {
+            ctx = context;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean onPreferenceClick(final Preference preference) {
+            final Builder b = new Builder(ctx);
+            final int l = BUBBLES_STR.length;
+            final String[] cols = new String[]{"icon", "text"};
+            final ArrayList<HashMap<String, Object>> rows
+                    = new ArrayList<>();
+            for (int i = 0; i < l; i++) {
+                final HashMap<String, Object> m = new HashMap<>(2);
+                m.put(cols[0], BUBBLES_IMG[i]);
+                m.put(cols[1], ctx.getString(BUBBLES_STR[i]));
+                rows.add(m);
+            }
+            b.setAdapter(new SimpleAdapter(ctx, rows, R.layout.bubbles_item, cols, new int[]{
+                            android.R.id.icon, android.R.id.text1}),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(final DialogInterface dialog, final int which) {
+                            preference.getEditor().putInt(preference.getKey(), which).commit();
+                        }
+                    });
+            b.setNegativeButton(android.R.string.cancel, null);
+            b.show();
+            return true;
+        }
     }
 }

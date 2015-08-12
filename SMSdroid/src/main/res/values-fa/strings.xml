@@ -207,4 +207,5 @@
     <string name="click_again_to_unfilter">برای نمایش همه پیام‌ها دوباره کلیک کنید.</string>
     <string name="add_to_white_list">اضافه کردن به لیست سفید</string>
     <string name="remove_from_white_list">حذف کردن از لیست سفید</string>
+    <string name="sender_me">من</string>
 </resources>

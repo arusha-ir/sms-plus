@@ -18,25 +18,16 @@
  */
 package de.ub0r.android.smsdroid;
 
-import android.content.ActivityNotFoundException;
-import android.content.ComponentName;
-import android.content.ContentResolver;
-import android.content.ContentUris;
-import android.content.Context;
-import android.content.Intent;
+import android.content.*;
 import android.database.Cursor;
 import android.database.MergeCursor;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ResourceCursorAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
 import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.logg0r.Log;
 
@@ -51,72 +42,39 @@ public class MessageAdapter extends ResourceCursorAdapter {
      * Tag for logging.
      */
     static final String TAG = "msa";
-
-    /**
-     * Used background drawable for messages.
-     */
-    private final int backgroundDrawableIn, backgroundDrawableOut;
-
     /**
      * General WHERE clause.
      */
     private static final String WHERE = "(" + Message.PROJECTION_JOIN[Message.INDEX_TYPE] + " != "
             + Message.SMS_DRAFT + " OR " + Message.PROJECTION_JOIN[Message.INDEX_TYPE]
             + " IS NULL)";
-
     /**
      * WHERE clause for drafts.
      */
     private static final String WHERE_DRAFT = "(" + Message.PROJECTION_SMS[Message.INDEX_THREADID]
             + " = ? AND " + Message.PROJECTION_SMS[Message.INDEX_TYPE] + " = " + Message.SMS_DRAFT
             + ")";
-    // + " OR " + type + " = " + Message.SMS_PENDING;
-
     /**
-     * Display Name (name if !=null, else address).
+     * Used background drawable for messages.
      */
-    private String displayName = null;
-
+    private final int backgroundDrawableIn, backgroundDrawableOut;
+    // + " OR " + type + " = " + Message.SMS_PENDING;
     /**
      * Used text size/color.
      */
     private final int textSize, textColor;
-
     /**
      * Convert NCR.
      */
     private final boolean convertNCR;
-
     /**
      * Show emoticons as images
      */
     private final boolean showEmoticons;
-
     /**
-     * View holder.
+     * Display Name (name if !=null, else address).
      */
-    private static class ViewHolder {
-
-        TextView tvBody;
-
-        TextView tvPerson;
-
-        TextView tvDate;
-
-        ImageView ivPhoto;
-
-        View vRead;
-
-        public View vPending;
-
-        public View vLayout;
-
-        public ImageView ivInOut;
-
-        public Button btnDownload;
-
-        public Button btnImport;
-    }
+    private String displayName = null;
 
     /**
      * Default Constructor.
@@ -223,6 +181,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
         final Message m = Message.getMessage(context, cursor);
 
         ViewHolder holder = (ViewHolder) view.getTag();
+
         if (holder == null) {
             holder = new ViewHolder();
             holder.tvPerson = (TextView) view.findViewById(R.id.addr);
@@ -257,6 +216,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
         }
         // incoming / outgoing / pending
         int pendingvisability = View.GONE;
+//        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) view.getLayoutParams();
         switch (t) {
             case Message.SMS_DRAFT:
                 // TODO case Message.SMS_PENDING:
@@ -264,27 +224,34 @@ public class MessageAdapter extends ResourceCursorAdapter {
                 pendingvisability = View.VISIBLE;
             case Message.SMS_OUT: // handle drafts/pending here too
             case Message.MMS_OUT:
-                holder.tvPerson.setText(context.getString(R.string.me) + subject);
+                holder.tvPerson.setText(context.getString(R.string.me) + subject + " - ");
+//                params.addRule(RelativeLayout.ALIGN_PARENT_LEFT, 0);
+//                params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                 try {
                     holder.vLayout.setBackgroundResource(backgroundDrawableOut);
                 } catch (OutOfMemoryError e) {
                     Log.e(TAG, "OOM while setting bg", e);
                 }
+                ((LinearLayout) view).setGravity(Gravity.RIGHT);
                 holder.ivInOut.setImageResource(R.drawable.ic_call_log_list_outgoing_call);
                 break;
             case Message.SMS_IN:
             case Message.MMS_IN:
             default:
-                holder.tvPerson.setText(displayName + subject);
+                holder.tvPerson.setText(displayName + subject + " - ");
+//                params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 0);
+//                params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                 try {
                     holder.vLayout.setBackgroundResource(backgroundDrawableIn);
                 } catch (OutOfMemoryError e) {
                     Log.e(TAG, "OOM while setting bg", e);
                 }
                 holder.ivInOut.setImageResource(R.drawable.ic_call_log_list_incoming_call);
+                ((LinearLayout) view).setGravity(Gravity.LEFT);
                 holder.vPending.setVisibility(View.GONE);
                 break;
         }
+//        view.setLayoutParams(params);
         holder.vPending.setVisibility(pendingvisability);
 
         // unread / read
@@ -358,7 +325,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
                 text = SmileyParser.getInstance(context).addSmileySpans(text);
             }
             holder.tvBody.setText(text);
-            holder.tvBody.setVisibility(View.VISIBLE);
+//            holder.tvBody.setVisibility(View.VISIBLE);
             String stext = text.toString();
             if (stext.contains("BEGIN:VCARD") && stext.contains("END:VCARD")) {
                 final Button btn = holder.btnImport;
@@ -383,5 +350,35 @@ public class MessageAdapter extends ResourceCursorAdapter {
                 holder.btnImport.setVisibility(View.GONE);
             }
         }
+    }
+//
+//    @Override
+//    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+//        LayoutInflater mInflater = (LayoutInflater) context
+//                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        final Message m = Message.getMessage(context, cursor);
+//        int t = m.getType();
+//        if (t == Message.SMS_OUT || t == Message.SMS_DRAFT || t == Message.MMS_OUT) {
+//            return mInflater.inflate(R.layout.messagelist_item_left, parent, false);
+//        } else {
+//            return mInflater.inflate(R.layout.messagelist_item_right, parent, false);
+//        }
+//    }
+
+    /**
+     * View holder.
+     */
+    private static class ViewHolder {
+
+        public View vPending;
+        public View vLayout;
+        public ImageView ivInOut;
+        public Button btnDownload;
+        public Button btnImport;
+        TextView tvBody;
+        TextView tvPerson;
+        TextView tvDate;
+        ImageView ivPhoto;
+        View vRead;
     }
 }
