@@ -182,6 +182,9 @@
             <intent-filter>
                 <action android:name="com.android.mms.transaction.MESSAGE_SENT"/>
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_DELIVER"/>
+            </intent-filter>
         </receiver>
 
         <receiver android:name="de.ub0r.android.smsdroid.MmsReceiver" android:exported="true"

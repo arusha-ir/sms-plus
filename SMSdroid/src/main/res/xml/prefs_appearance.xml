@@ -16,12 +16,12 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ListPreference
-            android:defaultValue="light"
-            android:entries="@array/themes"
-            android:entryValues="@array/themes_values"
-            android:key="theme"
-            android:title="@string/theme_"/>
+    <!--<ListPreference-->
+    <!--android:defaultValue="light"-->
+    <!--android:entries="@array/themes"-->
+    <!--android:entryValues="@array/themes_values"-->
+    <!--android:key="theme"-->
+    <!--android:title="@string/theme_"/>-->
 
     <CheckBoxPreference
             android:defaultValue="false"
@@ -49,10 +49,10 @@
             android:summary="@string/textcolor_hint"
             android:title="@string/textcolor_"/>
 
-    <CheckBoxPreference
-            android:key="text_color_ignore_conv"
-            android:summary="@string/textcolor_ignore_conv_hint"
-            android:title="@string/textcolor_ignore_conv_"/>
+    <!--<CheckBoxPreference-->
+    <!--android:key="text_color_ignore_conv"-->
+    <!--android:summary="@string/textcolor_ignore_conv_hint"-->
+    <!--android:title="@string/textcolor_ignore_conv_"/>-->
     <CheckBoxPreference
             android:defaultValue="true"
             android:key="show_contact_photo"

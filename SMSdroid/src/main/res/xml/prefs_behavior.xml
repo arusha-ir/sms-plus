@@ -17,20 +17,20 @@
     not, see <http://www.gnu.org/licenses/>.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <CheckBoxPreference android:key="enable_autosend"
-                        android:defaultValue="true" android:title="@string/autosend_"
-                        android:summary="@string/autosend_hint"
-                        android:disableDependentsState="true"/>
-    <CheckBoxPreference android:key="show_textfield"
-                        android:defaultValue="true" android:title="@string/show_text_field_"
-                        android:summary="@string/show_text_field_hint"
-                        android:dependency="enable_autosend"/>
-    <CheckBoxPreference android:key="show_target_app"
-                        android:defaultValue="true" android:title="@string/show_target_app_"
-                        android:summary="@string/show_target_app_hint"/>
-    <CheckBoxPreference android:key="decode_decimal_ncr"
-                        android:defaultValue="true" android:title="@string/decode_decimal_ncr_"
-                        android:summary="@string/decode_decimal_ncr_hint"/>
+    <!--<CheckBoxPreference android:key="enable_autosend"-->
+    <!--android:defaultValue="true" android:title="@string/autosend_"-->
+    <!--android:summary="@string/autosend_hint"-->
+    <!--android:disableDependentsState="true"/>-->
+    <!--<CheckBoxPreference android:key="show_textfield"-->
+    <!--android:defaultValue="true" android:title="@string/show_text_field_"-->
+    <!--android:summary="@string/show_text_field_hint"-->
+    <!--android:dependency="enable_autosend"/>-->
+    <!--<CheckBoxPreference android:key="show_target_app"-->
+    <!--android:defaultValue="true" android:title="@string/show_target_app_"-->
+    <!--android:summary="@string/show_target_app_hint"/>-->
+    <!--<CheckBoxPreference android:key="decode_decimal_ncr"-->
+    <!--android:defaultValue="true" android:title="@string/decode_decimal_ncr_"-->
+    <!--android:summary="@string/decode_decimal_ncr_hint"/>-->
     <CheckBoxPreference android:key="activate_sender"
                         android:defaultValue="true" android:title="@string/activate_sender_"
                         android:summary="@string/activate_sender_hint"/>
@@ -42,36 +42,36 @@
                         android:defaultValue="true"
                         android:title="@string/edit_short_text_"
                         android:summary="@string/edit_short_text_hint"/>
-    <CheckBoxPreference android:key="forwarded_sms_clean"
-                        android:title="@string/forwarded_sms_clean_"
-                        android:summary="@string/forwarded_sms_clean_hint"
-                        android:defaultValue="false"/>
+    <!--<CheckBoxPreference android:key="forwarded_sms_clean"-->
+    <!--android:title="@string/forwarded_sms_clean_"-->
+    <!--android:summary="@string/forwarded_sms_clean_hint"-->
+    <!--android:defaultValue="false"/>-->
 
-    <PreferenceScreen android:title="@string/fix_numbers_"
-                      android:summary="@string/fix_numbers_hint">
-        <PreferenceCategory android:title="@string/fix_number1_regex_">
-            <EditTextPreference android:key="regex1"
-                                android:title="@string/fix_number1_regex_"
-                                android:summary="@string/fix_numbers_regex_hint"/>
-            <EditTextPreference android:key="replace1"
-                                android:title="@string/fix_number1_replace_"
-                                android:summary="@string/fix_numbers_replace_hint"/>
-        </PreferenceCategory>
-        <PreferenceCategory android:title="@string/fix_number2_regex_">
-            <EditTextPreference android:key="regex2"
-                                android:title="@string/fix_number2_regex_"
-                                android:summary="@string/fix_numbers_regex_hint"/>
-            <EditTextPreference android:key="replace2"
-                                android:title="@string/fix_number2_replace_"
-                                android:summary="@string/fix_numbers_replace_hint"/>
-        </PreferenceCategory>
-        <PreferenceCategory android:title="@string/fix_number3_regex_">
-            <EditTextPreference android:key="regex3"
-                                android:title="@string/fix_number3_regex_"
-                                android:summary="@string/fix_numbers_regex_hint"/>
-            <EditTextPreference android:key="replace3"
-                                android:title="@string/fix_number3_replace_"
-                                android:summary="@string/fix_numbers_replace_hint"/>
-        </PreferenceCategory>
-    </PreferenceScreen>
+    <!--<PreferenceScreen android:title="@string/fix_numbers_"-->
+    <!--android:summary="@string/fix_numbers_hint">-->
+    <!--<PreferenceCategory android:title="@string/fix_number1_regex_">-->
+    <!--<EditTextPreference android:key="regex1"-->
+    <!--android:title="@string/fix_number1_regex_"-->
+    <!--android:summary="@string/fix_numbers_regex_hint"/>-->
+    <!--<EditTextPreference android:key="replace1"-->
+    <!--android:title="@string/fix_number1_replace_"-->
+    <!--android:summary="@string/fix_numbers_replace_hint"/>-->
+    <!--</PreferenceCategory>-->
+    <!--<PreferenceCategory android:title="@string/fix_number2_regex_">-->
+    <!--<EditTextPreference android:key="regex2"-->
+    <!--android:title="@string/fix_number2_regex_"-->
+    <!--android:summary="@string/fix_numbers_regex_hint"/>-->
+    <!--<EditTextPreference android:key="replace2"-->
+    <!--android:title="@string/fix_number2_replace_"-->
+    <!--android:summary="@string/fix_numbers_replace_hint"/>-->
+    <!--</PreferenceCategory>-->
+    <!--<PreferenceCategory android:title="@string/fix_number3_regex_">-->
+    <!--<EditTextPreference android:key="regex3"-->
+    <!--android:title="@string/fix_number3_regex_"-->
+    <!--android:summary="@string/fix_numbers_regex_hint"/>-->
+    <!--<EditTextPreference android:key="replace3"-->
+    <!--android:title="@string/fix_number3_replace_"-->
+    <!--android:summary="@string/fix_numbers_replace_hint"/>-->
+    <!--</PreferenceCategory>-->
+    <!--</PreferenceScreen>-->
 </PreferenceScreen>
