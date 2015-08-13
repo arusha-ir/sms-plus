@@ -94,6 +94,14 @@
         <activity android:name="de.ub0r.android.smsdroid.PreferencesBehaviorActivity"/>
         <activity android:name="de.ub0r.android.smsdroid.PreferencesNotificationActivity"/>
         <activity android:name="de.ub0r.android.smsdroid.Preferences11Activity"/>
+        <activity android:name="ir.arusha.android.sms_plus.intent.OtherAppsIntent">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="arusha"/>
+            </intent-filter>
+
+        </activity>
         <activity
                 android:name="de.ub0r.android.smsdroid.AboutActivity"
                 android:theme="@style/Theme.SherlockSMSdroid_Light"/>
