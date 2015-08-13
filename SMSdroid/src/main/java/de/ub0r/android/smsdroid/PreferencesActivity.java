@@ -87,6 +87,10 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
      */
     public static final String PREFS_FORWARD_SMS_CLEAN = "forwarded_sms_clean";
     /**
+     * Whether delivery report is on or off
+     */
+    public static final String PREFS_DELIVERY_REPORT = "delivery_report";
+    /**
      * Tag for logging.
      */
     static final String TAG = "prefs";
@@ -198,17 +202,14 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
      * Preference's name: prefix regular expression.
      */
     private static final String PREFS_REGEX = "regex";
-
     /**
      * Preference's name: prefix replace.
      */
     private static final String PREFS_REPLACE = "replace";
-
     /**
      * Number of regular expressions.
      */
     private static final int PREFS_REGEX_COUNT = 3;
-
     /**
      * Default color.
      */

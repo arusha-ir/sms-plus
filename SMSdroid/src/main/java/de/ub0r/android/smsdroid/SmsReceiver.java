@@ -38,6 +38,7 @@ import android.provider.CallLog.Calls;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.SmsMessage;
 import android.util.TypedValue;
+import android.widget.Toast;
 import de.ub0r.android.logg0r.Log;
 import ir.arusha.android.sms_plus.filter.FilterManager;
 
@@ -134,6 +135,8 @@ public class SmsReceiver extends BroadcastReceiver {
         String t = null;
         if (SenderActivity.MESSAGE_SENT_ACTION.equals(action)) {
             handleSent(context, intent, receiver.getResultCode());
+        } else if (SenderActivity.MESSAGE_DELIVERED_ACTION.equals(action)) {
+            handleDelivered(context, intent, receiver.getResultCode());
         } else {
             boolean silent = false;
 
@@ -637,6 +640,30 @@ public class SmsReceiver extends BroadcastReceiver {
             context.getContentResolver().update(uri, cv, null, null);
         } else {
             updateFailedNotification(context, uri);
+        }
+    }
+
+    /**
+     * Handle delivery report.
+     *
+     * @param context    {@link Context}
+     * @param intent     {@link Intent}
+     * @param resultCode message status
+     */
+    private static void handleDelivered(final Context context, final Intent intent,
+                                        final int resultCode) {
+        final Uri uri = intent.getData();
+        Log.d(TAG, "delivered message: ", uri, ", rc: ", resultCode);
+        if (uri == null) {
+            Log.w(TAG, "handleDelivered(null)");
+            return;
+        }
+
+        if (resultCode == Activity.RESULT_OK) {
+            //TODO delivery in DB
+            Toast.makeText(context, "SMS Delivered", Toast.LENGTH_LONG).show();
+        } else {
+            //TODO not delivered in DB
         }
     }
 

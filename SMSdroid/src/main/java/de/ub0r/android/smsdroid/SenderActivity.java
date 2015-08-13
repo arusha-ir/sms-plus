@@ -3,10 +3,6 @@
  */
 package de.ub0r.android.smsdroid;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-
 import android.app.PendingIntent;
 import android.app.PendingIntent.CanceledException;
 import android.content.ContentResolver;
@@ -28,12 +24,14 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import de.ub0r.android.lib.apis.ContactsWrapper;
+import de.ub0r.android.logg0r.Log;
 
 import java.net.URLDecoder;
 import java.util.ArrayList;
-
-import de.ub0r.android.lib.apis.ContactsWrapper;
-import de.ub0r.android.logg0r.Log;
 
 /**
  * Class sending messages via standard Messaging interface.
@@ -43,55 +41,46 @@ import de.ub0r.android.logg0r.Log;
 public final class SenderActivity extends SherlockActivity implements OnClickListener {
 
     /**
-     * Tag for output.
-     */
-    private static final String TAG = "send";
-
-    /**
-     * {@link Uri} for saving messages.
-     */
-    private static final Uri URI_SMS = Uri.parse("content://sms");
-
-    /**
      * {@link Uri} for saving sent messages.
      */
     public static final Uri URI_SENT = Uri.parse("content://sms/sent");
-
-    /**
-     * Projection for getting the id.
-     */
-    private static final String[] PROJECTION_ID = new String[]{BaseColumns._ID};
-
-    /**
-     * SMS DB: address.
-     */
-    private static final String ADDRESS = "address";
-
-    /**
-     * SMS DB: read.
-     */
-    private static final String READ = "read";
-
     /**
      * SMS DB: type.
      */
     public static final String TYPE = "type";
-
-    /**
-     * SMS DB: body.
-     */
-    private static final String BODY = "body";
-
-    /**
-     * SMS DB: date.
-     */
-    private static final String DATE = "date";
-
     /**
      * Message set action.
      */
     public static final String MESSAGE_SENT_ACTION = "com.android.mms.transaction.MESSAGE_SENT";
-
+    public static final String MESSAGE_DELIVERED_ACTION = "com.android.mms.transaction.MESSAGE_DELIVERED";
+    /**
+     * Tag for output.
+     */
+    private static final String TAG = "send";
+    /**
+     * {@link Uri} for saving messages.
+     */
+    private static final Uri URI_SMS = Uri.parse("content://sms");
+    /**
+     * Projection for getting the id.
+     */
+    private static final String[] PROJECTION_ID = new String[]{BaseColumns._ID};
+    /**
+     * SMS DB: address.
+     */
+    private static final String ADDRESS = "address";
+    /**
+     * SMS DB: read.
+     */
+    private static final String READ = "read";
+    /**
+     * SMS DB: body.
+     */
+    private static final String BODY = "body";
+    /**
+     * SMS DB: date.
+     */
+    private static final String DATE = "date";
     /**
      * Hold recipient and text.
      */
@@ -291,6 +280,12 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
         final ArrayList<String> messages = smsmgr.divideMessage(message);
         final int c = messages.size();
         ArrayList<PendingIntent> sentIntents = new ArrayList<>(c);
+        boolean deliveryReport = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
+                PreferencesActivity.PREFS_DELIVERY_REPORT, true);
+
+        final ArrayList<PendingIntent> deliveryIntents;
+        if (deliveryReport) deliveryIntents = new ArrayList<>();
+        else deliveryIntents = null;
 
         try {
             Log.d(TAG, "send messages to: ", recipient);
@@ -301,8 +296,12 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 
                 final Intent sent = new Intent(MESSAGE_SENT_ACTION, draft, this, SmsReceiver.class);
                 sentIntents.add(PendingIntent.getBroadcast(this, 0, sent, 0));
+                if (deliveryReport) {
+                    final Intent delivered = new Intent(MESSAGE_DELIVERED_ACTION, draft, this, SmsReceiver.class);
+                    deliveryIntents.add(PendingIntent.getBroadcast(this, 0, delivered, 0));
+                }
             }
-            smsmgr.sendMultipartTextMessage(recipient, null, messages, sentIntents, null);
+            smsmgr.sendMultipartTextMessage(recipient, null, messages, sentIntents, deliveryIntents);
             Log.i(TAG, "message sent");
         } catch (Exception e) {
             Log.e(TAG, "unexpected error", e);
