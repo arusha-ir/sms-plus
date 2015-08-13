@@ -37,6 +37,7 @@
         <PreferenceScreen android:key="more_apps"
                           android:title="@string/more_apps_">
             <intent android:action="android.intent.action.VIEW"
+                    android:data="arusha://other-apps"
                     android:targetClass="ir.arusha.android.sms_plus.intent.OtherAppsIntent"/>
         </PreferenceScreen>
     </PreferenceCategory>
