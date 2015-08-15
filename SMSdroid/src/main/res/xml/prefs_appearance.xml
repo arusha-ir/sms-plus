@@ -67,6 +67,11 @@
             android:summary="@string/show_full_date_hint"
             android:title="@string/show_full_date_"/>
     <CheckBoxPreference
+            android:key="shamsi"
+            android:defaultValue="true"
+            android:summary="@string/shamsi_hint"
+            android:title="@string/shamsi_"/>
+    <CheckBoxPreference
             android:key="hide_send"
             android:summary="@string/hide_send_hint"
             android:title="@string/hide_send_"/>

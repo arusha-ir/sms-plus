@@ -17,6 +17,11 @@
     not, see <http://www.gnu.org/licenses/>.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+            android:key="delivery_report"
+            android:defaultValue="true"
+            android:summary="@string/delivery_report_hint"
+            android:title="@string/delivery_report_"/>
     <CheckBoxPreference android:key="notification_enable"
                         android:title="@string/notification_enable_"
                         android:summary="@string/notification_enable_hint"

@@ -32,7 +32,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Telephony;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.view.Window;
 import android.widget.*;
@@ -46,6 +45,7 @@ import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
 import de.ub0r.android.logg0r.Log;
 import ir.arusha.android.sms_plus.cache.PhoneNumberCache;
+import ir.arusha.android.sms_plus.date.DateLocalizer;
 import ir.arusha.android.sms_plus.filter.FilterManager;
 
 import java.util.Calendar;
@@ -308,22 +308,14 @@ public final class ConversationListActivity extends SherlockActivity implements
      *
      * @param context {@link Context}
      * @param time    time
-     * @return formated date.
+     * @return formatted date.
      */
     static String getDate(final Context context, final long time) {
         long t = time;
         if (t < MIN_DATE) {
             t *= MILLIS;
         }
-        if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-                PreferencesActivity.PREFS_FULL_DATE, false)) {
-            return DateFormat.getTimeFormat(context).format(t) + " "
-                    + DateFormat.getDateFormat(context).format(t);
-        } else if (t < CAL_DAYAGO.getTimeInMillis()) {
-            return DateFormat.getDateFormat(context).format(t);
-        } else {
-            return DateFormat.getTimeFormat(context).format(t);
-        }
+        return DateLocalizer.localize(context, t, CAL_DAYAGO.getTimeInMillis());
     }
 
     /**

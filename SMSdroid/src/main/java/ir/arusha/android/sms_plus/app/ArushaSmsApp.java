@@ -2,6 +2,7 @@ package ir.arusha.android.sms_plus.app;
 
 import android.app.Application;
 import ir.arusha.android.sms_plus.cache.PhoneNumberCache;
+import ir.arusha.android.sms_plus.date.DateLocalizer;
 import ir.arusha.android.sms_plus.filter.FilterManager;
 
 /**
@@ -14,6 +15,7 @@ public class ArushaSmsApp extends Application {
         super.onCreate();
         FilterManager.initialize(this.getApplicationContext());
         PhoneNumberCache.initialize(this.getApplicationContext());
+        DateLocalizer.init(this.getApplicationContext());
     }
 
     @Override

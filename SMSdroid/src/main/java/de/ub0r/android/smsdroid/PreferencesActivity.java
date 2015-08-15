@@ -91,6 +91,14 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
      */
     public static final String PREFS_DELIVERY_REPORT = "delivery_report";
     /**
+     * Whether delivery report is on or off
+     */
+    public static final String PREFS_SHAMSI = "shamsi";
+    /**
+     * Prefernece's name: show full date and time.
+     */
+    public static final String PREFS_FULL_DATE = "show_full_date";
+    /**
      * Tag for logging.
      */
     static final String TAG = "prefs";
@@ -122,10 +130,6 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
      * Prefernece's name: show bubbles in messagelist.
      */
     static final String PREFS_BUBBLES = "show_bubbles";
-    /**
-     * Prefernece's name: show full date and time.
-     */
-    static final String PREFS_FULL_DATE = "show_full_date";
     /**
      * Prefernece's name: hide send button.
      */

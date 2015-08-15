@@ -661,6 +661,9 @@ public class SmsReceiver extends BroadcastReceiver {
 
         if (resultCode == Activity.RESULT_OK) {
             //TODO delivery in DB
+            final ContentValues cv = new ContentValues(1);
+            cv.put(SenderActivity.STATUS, SenderActivity.STATUS_COMPLETE);
+            context.getContentResolver().update(uri, cv, null, null);
             Toast.makeText(context, "SMS Delivered", Toast.LENGTH_LONG).show();
         } else {
             //TODO not delivered in DB

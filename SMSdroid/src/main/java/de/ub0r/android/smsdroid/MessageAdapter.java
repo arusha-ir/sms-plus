@@ -216,7 +216,6 @@ public class MessageAdapter extends ResourceCursorAdapter {
         }
         // incoming / outgoing / pending
         int pendingvisability = View.GONE;
-//        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) view.getLayoutParams();
         switch (t) {
             case Message.SMS_DRAFT:
                 // TODO case Message.SMS_PENDING:
@@ -224,9 +223,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
                 pendingvisability = View.VISIBLE;
             case Message.SMS_OUT: // handle drafts/pending here too
             case Message.MMS_OUT:
-                holder.tvPerson.setText(context.getString(R.string.me) + subject + " - ");
-//                params.addRule(RelativeLayout.ALIGN_PARENT_LEFT, 0);
-//                params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                holder.tvPerson.setText(context.getString(R.string.me) + subject + "  ");
                 try {
                     holder.vLayout.setBackgroundResource(backgroundDrawableOut);
                 } catch (OutOfMemoryError e) {
@@ -238,9 +235,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
             case Message.SMS_IN:
             case Message.MMS_IN:
             default:
-                holder.tvPerson.setText(displayName + subject + " - ");
-//                params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 0);
-//                params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                holder.tvPerson.setText(displayName + subject + "  ");
                 try {
                     holder.vLayout.setBackgroundResource(backgroundDrawableIn);
                 } catch (OutOfMemoryError e) {
@@ -251,7 +246,10 @@ public class MessageAdapter extends ResourceCursorAdapter {
                 holder.vPending.setVisibility(View.GONE);
                 break;
         }
-//        view.setLayoutParams(params);
+        if (m.getStatus() == SenderActivity.STATUS_COMPLETE) {
+            holder.ivInOut.setImageResource(R.drawable.ic_call_log_list_delivered_message);
+            holder.ivInOut.setVisibility(View.VISIBLE);
+        } else holder.ivInOut.setVisibility(View.GONE);
         holder.vPending.setVisibility(pendingvisability);
 
         // unread / read

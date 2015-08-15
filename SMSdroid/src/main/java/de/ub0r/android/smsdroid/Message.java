@@ -18,8 +18,6 @@
  */
 package de.ub0r.android.smsdroid;
 
-import org.apache.commons.io.IOUtils;
-
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -34,16 +32,11 @@ import android.provider.CallLog.Calls;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.Toast;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.LinkedHashMap;
-
 import de.ub0r.android.logg0r.Log;
+import org.apache.commons.io.IOUtils;
+
+import java.io.*;
+import java.util.LinkedHashMap;
 
 /**
  * Class holding a single message.
@@ -53,87 +46,61 @@ import de.ub0r.android.logg0r.Log;
 public final class Message {
 
     /**
-     * Tag for logging.
-     */
-    static final String TAG = "msg";
-
-    /**
      * Bitmap showing the play button.
      */
     public static final Bitmap BITMAP_PLAY = Bitmap.createBitmap(1, 1, Config.RGB_565);
-
     /**
      * Filename for saved attachments.
      */
     public static final String ATTACHMENT_FILE = "mms.";
-
-    /**
-     * Cache size.
-     */
-    private static final int CAHCESIZE = 50;
-
-    /**
-     * Internal Cache.
-     */
-    private static final LinkedHashMap<Integer, Message> CACHE
-            = new LinkedHashMap<>(
-            26, 0.9f, true);
-
     /**
      * INDEX: id.
      */
     public static final int INDEX_ID = 0;
-
     /**
      * INDEX: read.
      */
     public static final int INDEX_READ = 1;
-
     /**
      * INDEX: date.
      */
     public static final int INDEX_DATE = 2;
-
     /**
      * INDEX: thread_id.
      */
     public static final int INDEX_THREADID = 3;
-
     /**
      * INDEX: type.
      */
     public static final int INDEX_TYPE = 4;
-
     /**
      * INDEX: address.
      */
     public static final int INDEX_ADDRESS = 5;
-
     /**
      * INDEX: body.
      */
     public static final int INDEX_BODY = 6;
-
+    /**
+     * INDEX: body.
+     */
+    public static final int INDEX_STATUS = 7;
     /**
      * INDEX: subject.
      */
-    public static final int INDEX_SUBJECT = 7;
-
+    public static final int INDEX_SUBJECT = 8;
     /**
      * INDEX: m_type.
      */
-    public static final int INDEX_MTYPE = 8;
-
+    public static final int INDEX_MTYPE = 9;
     /**
      * INDEX: mid.
      */
     public static final int INDEX_MID = 1;
-
     /**
      * INDEX: content type.
      */
     public static final int INDEX_CT = 2;
-
     /**
      * Cursor's projection.
      */
@@ -145,8 +112,8 @@ public final class Message {
             Calls.TYPE, // 4
             "address", // 5
             "body", // 6
+            "status" //7
     };
-
     /**
      * Cursor's projection.
      */
@@ -158,8 +125,8 @@ public final class Message {
             PROJECTION[INDEX_TYPE], // 4
             PROJECTION[INDEX_ADDRESS], // 5
             PROJECTION[INDEX_BODY], // 6
+            PROJECTION[INDEX_STATUS], // 7
     };
-
     /**
      * Cursor's projection.
      */
@@ -171,10 +138,10 @@ public final class Message {
             "m_type", // 4
             PROJECTION[INDEX_ID], // 5
             PROJECTION[INDEX_ID], // 6
-            "sub", // 7
-            "m_type", // 8
+            PROJECTION[INDEX_STATUS], // 7
+            "sub", // 8
+            "m_type", // 9
     };
-
     /**
      * Cursor's projection.
      */
@@ -186,10 +153,10 @@ public final class Message {
             PROJECTION[INDEX_TYPE], // 4
             PROJECTION[INDEX_ADDRESS], // 5
             PROJECTION[INDEX_BODY], // 6
-            "sub", // 7
-            "m_type", // 8
+            PROJECTION[INDEX_STATUS], // 7
+            "sub", // 8
+            "m_type", // 9
     };
-
     /**
      * Cursor's projection for set read/unread operations.
      */
@@ -199,12 +166,6 @@ public final class Message {
             PROJECTION[INDEX_DATE], // 2
             PROJECTION[INDEX_THREADID], // 3
     };
-
-    /**
-     * {@link Uri} for parts.
-     */
-    private static final Uri URI_PARTS = Uri.parse("content://mms/part/");
-
     /**
      * Cursor's projection for parts.
      */
@@ -213,68 +174,74 @@ public final class Message {
             "mid", // 1
             "ct", // 2
     };
-
-    /**
-     * SQL WHERE: read/unread messages.
-     */
-    static final String SELECTION_READ_UNREAD = "read = ?";
-
-    /**
-     * SQL WHERE: unread messages.
-     */
-    static final String[] SELECTION_UNREAD = new String[]{"0"};
-
-    /**
-     * SQL WHERE: read messages.
-     */
-    static final String[] SELECTION_READ = new String[]{"1"};
-
     /**
      * Cursor's sort, upside down.
      */
     public static final String SORT_USD = Calls.DATE + " ASC";
-
     /**
      * Cursor's sort, normal.
      */
     public static final String SORT_NORM = Calls.DATE + " DESC";
-
     /**
      * Type for incoming sms.
      */
     public static final int SMS_IN = Calls.INCOMING_TYPE;
-
     /**
      * Type for outgoing sms.
      */
     public static final int SMS_OUT = Calls.OUTGOING_TYPE;
-
     /**
      * Type for sms drafts.
      */
     public static final int SMS_DRAFT = 3;
-    /** Type for pending sms. */
-    // TODO public static final int SMS_PENDING = 4;
-
     /**
      * Type for incoming mms.
      */
     public static final int MMS_IN = 132;
-
     /**
      * Type for outgoing mms.
      */
     public static final int MMS_OUT = 128;
-    /** Type for mms drafts. */
-    // public static final int MMS_DRAFT = 128;
-    /** Type for pending mms. */
-    // public static final int MMS_PENDING = 128;
-
     /**
      * Type for not yet loaded mms.
      */
     public static final int MMS_TOLOAD = 130;
-
+    /**
+     * Tag for logging.
+     */
+    static final String TAG = "msg";
+    /**
+     * SQL WHERE: read/unread messages.
+     */
+    static final String SELECTION_READ_UNREAD = "read = ?";
+    /**
+     * SQL WHERE: unread messages.
+     */
+    static final String[] SELECTION_UNREAD = new String[]{"0"};
+    /**
+     * SQL WHERE: read messages.
+     */
+    static final String[] SELECTION_READ = new String[]{"1"};
+    /** Type for pending sms. */
+    // TODO public static final int SMS_PENDING = 4;
+    /**
+     * Cache size.
+     */
+    private static final int CAHCESIZE = 50;
+    /**
+     * Internal Cache.
+     */
+    private static final LinkedHashMap<Integer, Message> CACHE
+            = new LinkedHashMap<>(
+            26, 0.9f, true);
+    /** Type for mms drafts. */
+    // public static final int MMS_DRAFT = 128;
+    /** Type for pending mms. */
+    // public static final int MMS_PENDING = 128;
+    /**
+     * {@link Uri} for parts.
+     */
+    private static final Uri URI_PARTS = Uri.parse("content://mms/part/");
     /**
      * Id.
      */
@@ -284,51 +251,46 @@ public final class Message {
      * ThreadId.
      */
     private final long threadId;
-
-    /**
-     * Date.
-     */
-    private long date;
-
-    /**
-     * Address.
-     */
-    private String address;
-
-    /**
-     * Body.
-     */
-    private CharSequence body;
-
-    /**
-     * Type.
-     */
-    private int type;
-
-    /**
-     * Read status.
-     */
-    private int read;
-
-    /**
-     * Subject.
-     */
-    private String subject = null;
-
-    /**
-     * Picture.
-     */
-    private Bitmap picture = null;
-
-    /**
-     * {@link Integer} to for viewing the content.
-     */
-    private Intent contentIntent = null;
-
     /**
      * Is this message a MMS?
      */
     private final boolean isMms;
+    /**
+     * Date.
+     */
+    private long date;
+    /**
+     * Address.
+     */
+    private String address;
+    /**
+     * Body.
+     */
+    private CharSequence body;
+    /**
+     * Status.
+     */
+    private int status;
+    /**
+     * Type.
+     */
+    private int type;
+    /**
+     * Read status.
+     */
+    private int read;
+    /**
+     * Subject.
+     */
+    private String subject = null;
+    /**
+     * Picture.
+     */
+    private Bitmap picture = null;
+    /**
+     * {@link Integer} to for viewing the content.
+     */
+    private Intent contentIntent = null;
 
     /**
      * Default constructor.
@@ -350,6 +312,7 @@ public final class Message {
             body = null;
             address = null;
         }
+        status = cursor.getInt(INDEX_STATUS);
         type = cursor.getInt(INDEX_TYPE);
         read = cursor.getInt(INDEX_READ);
         if (body == null) {
@@ -388,6 +351,50 @@ public final class Message {
         // Log.d(TAG, "subject: ", subject);
         // Log.d(TAG, "body: ", body);
         // Log.d(TAG, "type: ", type);
+    }
+
+    /**
+     * Get a {@link Message} from cache or {@link Cursor}.
+     *
+     * @param context {@link Context}
+     * @param cursor  {@link Cursor}
+     * @return {@link Message}
+     */
+    public static Message getMessage(final Context context, final Cursor cursor) {
+        synchronized (CACHE) {
+            String body = cursor.getString(INDEX_BODY);
+            int id = cursor.getInt(INDEX_ID);
+            if (body == null) { // MMS
+                id *= -1;
+            }
+            Message ret = CACHE.get(id);
+            if (ret == null) {
+                ret = new Message(context, cursor);
+                CACHE.put(id, ret);
+                Log.d(TAG, "cachesize: ", CACHE.size());
+                while (CACHE.size() > CAHCESIZE) {
+                    Integer i = CACHE.keySet().iterator().next();
+                    Log.d(TAG, "rm msg. from cache: ", i);
+                    Message cc = CACHE.remove(i);
+                    if (cc == null) {
+                        Log.w(TAG, "CACHE might be inconsistent!");
+                        break;
+                    }
+                }
+            } else {
+                ret.update(cursor);
+            }
+            return ret;
+        }
+    }
+
+    /**
+     * Flush all cached messages.
+     */
+    public static void flushCache() {
+        synchronized (CACHE) {
+            CACHE.clear();
+        }
     }
 
     /**
@@ -514,50 +521,6 @@ public final class Message {
     }
 
     /**
-     * Get a {@link Message} from cache or {@link Cursor}.
-     *
-     * @param context {@link Context}
-     * @param cursor  {@link Cursor}
-     * @return {@link Message}
-     */
-    public static Message getMessage(final Context context, final Cursor cursor) {
-        synchronized (CACHE) {
-            String body = cursor.getString(INDEX_BODY);
-            int id = cursor.getInt(INDEX_ID);
-            if (body == null) { // MMS
-                id *= -1;
-            }
-            Message ret = CACHE.get(id);
-            if (ret == null) {
-                ret = new Message(context, cursor);
-                CACHE.put(id, ret);
-                Log.d(TAG, "cachesize: ", CACHE.size());
-                while (CACHE.size() > CAHCESIZE) {
-                    Integer i = CACHE.keySet().iterator().next();
-                    Log.d(TAG, "rm msg. from cache: ", i);
-                    Message cc = CACHE.remove(i);
-                    if (cc == null) {
-                        Log.w(TAG, "CACHE might be inconsistent!");
-                        break;
-                    }
-                }
-            } else {
-                ret.update(cursor);
-            }
-            return ret;
-        }
-    }
-
-    /**
-     * Flush all cached messages.
-     */
-    public static void flushCache() {
-        synchronized (CACHE) {
-            CACHE.clear();
-        }
-    }
-
-    /**
      * @return the id
      */
     public long getId() {
@@ -606,6 +569,13 @@ public final class Message {
      */
     public CharSequence getBody() {
         return body;
+    }
+
+    /**
+     * @return the status
+     */
+    public int getStatus() {
+        return status;
     }
 
     /**

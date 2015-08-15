@@ -208,4 +208,20 @@
     <string name="add_to_white_list">اضافه کردن به لیست سفید</string>
     <string name="remove_from_white_list">حذف کردن از لیست سفید</string>
     <string name="sender_me">من</string>
+    <string name="digit_0">۰</string>
+    <string name="digit_1">۱</string>
+    <string name="digit_2">۲</string>
+    <string name="digit_3">۳</string>
+    <string name="digit_4">۴</string>
+    <string name="digit_5">۵</string>
+    <string name="digit_6">۶</string>
+    <string name="digit_7">۷</string>
+    <string name="digit_8">۸</string>
+    <string name="digit_9">۹</string>
+    <string name="clock_am">ق.ظ</string>
+    <string name="clock_pm">ب.ظ</string>
+    <string name="delivery_report_">فعال سازی تحویل پیام</string>
+    <string name="delivery_report_hint">فعال کردن آگاه‌سازی وقتی که پیام تحویل می‌شود.</string>
+    <string name="shamsi_">نمایش تاریخ شمسی</string>
+    <string name="shamsi_hint">نمایش تاریخ شمسی به جای میلادی.</string>
 </resources>

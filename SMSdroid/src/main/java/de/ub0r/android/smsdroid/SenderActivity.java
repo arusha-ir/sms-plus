@@ -48,6 +48,30 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
      * SMS DB: type.
      */
     public static final String TYPE = "type";
+    /**ANDROID API 19: Telephony.TextBasedSmsColumns.STATUS*/
+    /**
+     * SMS DB: status.
+     */
+    public static final String STATUS = "status";
+
+    /**ANDROID API 19: elephony.TextBasedSmsColumns.STATUS_COMPLETE*/
+    /**
+     * TP-Status: no status received.
+     */
+    public static final int STATUS_NONE = -1;
+    /**
+     * TP-Status: complete.
+     */
+    public static final int STATUS_COMPLETE = 0;
+    /**
+     * TP-Status: pending.
+     */
+    public static final int STATUS_PENDING = 32;
+    /**
+     * TP-Status: failed.
+     */
+    public static final int STATUS_FAILED = 64;
+
     /**
      * Message set action.
      */
