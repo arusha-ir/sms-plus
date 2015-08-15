@@ -15,10 +15,8 @@ public class DateLocalizer {
     private static char[] digits = new char[10];
     private static String am;
     private static String pm;
-    private static boolean shamsi;
-    private static boolean fullDate;
 
-    public static void init(Context context) {
+    public static void init(final Context context) {
         int[] codes = new int[]{R.string.digit_0, R.string.digit_1, R.string.digit_2, R.string.digit_3,
                 R.string.digit_4, R.string.digit_5, R.string.digit_6, R.string.digit_7, R.string.digit_8,
                 R.string.digit_9};
@@ -26,28 +24,12 @@ public class DateLocalizer {
         for (int i = 0; i <= 9; i++) digits[i] = context.getResources().getText(codes[i]).charAt(0);
         am = resources.getText(R.string.clock_am).toString();
         pm = resources.getText(R.string.clock_pm).toString();
-//        shamsi = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-//                PreferencesActivity.PREFS_SHAMSI, true);
-//        fullDate = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-//                PreferencesActivity.PREFS_FULL_DATE, false);
-//        SharedPreferences.OnSharedPreferenceChangeListener listener = new SharedPreferences
-//                .OnSharedPreferenceChangeListener() {
-//            @Override
-//            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-//                                                  String key) {
-//                if (key.equals(PreferencesActivity.PREFS_SHAMSI))
-//                    shamsi = sharedPreferences.getBoolean(PreferencesActivity.PREFS_SHAMSI, true);
-//                if (key.equals(PreferencesActivity.PREFS_FULL_DATE))
-//                    fullDate = sharedPreferences.getBoolean(PreferencesActivity.PREFS_FULL_DATE, true);
-//            }
-//        };
-//        PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(listener);
     }
 
-    public static String localize(final Context context, long date, long dayAgo) {
+    public static String localize(final Context context, final long date, final long dayAgo) {
         final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        shamsi = pref.getBoolean(PreferencesActivity.PREFS_SHAMSI, true);
-        fullDate = pref.getBoolean(PreferencesActivity.PREFS_FULL_DATE, false);
+        final boolean shamsi = pref.getBoolean(PreferencesActivity.PREFS_SHAMSI, true);
+        final boolean fullDate = pref.getBoolean(PreferencesActivity.PREFS_FULL_DATE, false);
         final boolean includeDate;
         final boolean includeTime;
         if (fullDate) {
@@ -81,7 +63,7 @@ public class DateLocalizer {
         }
     }
 
-    private static String localize(StringBuilder date, boolean includeAmPm) {
+    private static String localize(final StringBuilder date, final boolean includeAmPm) {
         final int length = date.length();
         for (int i = 0; i < length; i++) {
             final char ch = date.charAt(i);
@@ -95,7 +77,7 @@ public class DateLocalizer {
         return date.toString();
     }
 
-    private static String localize(StringBuilder date) {
+    private static String localize(final StringBuilder date) {
         final int length = date.length();
         for (int i = 0; i < length; i++) {
             final char ch = date.charAt(i);

@@ -22,7 +22,7 @@ public class FilterManager {
     static boolean showAll = false;
     static Context context;
 
-    public static void initialize(Context c) {
+    public static void initialize(final Context c) {
         context = c;
         String[] replaces = c.getResources().getStringArray(R.array.replaces);
         String[] filters = c.getResources().getStringArray(R.array.filters);

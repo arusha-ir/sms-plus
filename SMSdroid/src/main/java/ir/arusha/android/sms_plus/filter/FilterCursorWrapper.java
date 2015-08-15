@@ -70,9 +70,7 @@ public class FilterCursorWrapper extends CursorWrapper {
 
     @Override
     public boolean moveToPosition(int position) {
-        if (position >= this.count || position < 0)
-            return false;
-        return super.moveToPosition(this.index[position]);
+        return !(position >= this.count || position < 0) && super.moveToPosition(this.index[position]);
     }
 
     @Override
