@@ -37,6 +37,7 @@ import android.widget.TextView;
 import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
 import de.ub0r.android.logg0r.Log;
+import ir.arusha.android.sms_plus.R;
 import ir.arusha.android.sms_plus.filter.FilterCursorWrapper;
 import ir.arusha.android.sms_plus.filter.FilterManager;
 

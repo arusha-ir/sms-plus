@@ -10,19 +10,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsoluteLayout;
 import android.widget.ImageView;
-import de.ub0r.android.smsdroid.R;
+import ir.arusha.android.sms_plus.R;
 
 public class AmbilWarnaDialog {
 	private static final String TAG = AmbilWarnaDialog.class.getSimpleName();
-
-	public interface OnAmbilWarnaListener {
-		void onReset(AmbilWarnaDialog dialog);
-
-		void onCancel(AmbilWarnaDialog dialog);
-
-		void onOk(AmbilWarnaDialog dialog, int color);
-	}
-
 	AlertDialog dialog;
 	OnAmbilWarnaListener listener;
 	View viewHue;
@@ -31,7 +22,6 @@ public class AmbilWarnaDialog {
 	View viewWarnaLama;
 	View viewWarnaBaru;
 	ImageView viewKeker;
-
 	float satudp;
 	int warnaLama;
 	int warnaBaru;
@@ -40,6 +30,7 @@ public class AmbilWarnaDialog {
 	float val;
 	float ukuranUiDp = 240.f;
 	float ukuranUiPx; // diset di constructor
+	float[] tmp01 = new float[3];
 
 	public AmbilWarnaDialog(final Context context, final int color,
 			final OnAmbilWarnaListener listener) {
@@ -195,8 +186,6 @@ public class AmbilWarnaDialog {
 		this.viewKeker.setLayoutParams(layoutParams);
 	}
 
-	float[] tmp01 = new float[3];
-
 	private int hitungWarna() {
 		this.tmp01[0] = this.hue;
 		this.tmp01[1] = this.sat;
@@ -206,5 +195,13 @@ public class AmbilWarnaDialog {
 
 	public void show() {
 		this.dialog.show();
+	}
+
+	public interface OnAmbilWarnaListener {
+		void onReset(AmbilWarnaDialog dialog);
+
+		void onCancel(AmbilWarnaDialog dialog);
+
+		void onOk(AmbilWarnaDialog dialog, int color);
 	}
 }

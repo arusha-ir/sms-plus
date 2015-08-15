@@ -19,11 +19,7 @@
 package de.ub0r.android.smsdroid;
 
 import android.app.Application;
-import android.content.ActivityNotFoundException;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
@@ -33,8 +29,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.widget.Toast;
-
 import de.ub0r.android.logg0r.Log;
+import ir.arusha.android.sms_plus.BuildConfig;
 
 /**
  * @author flx
@@ -50,46 +46,6 @@ public final class SMSdroid extends Application {
      * Projection for checking {@link Cursor}.
      */
     private static final String[] PROJECTION = new String[]{"_id"};
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onCreate() {
-        try {
-            Class.forName("android.os.AsyncTask");
-        } catch (Throwable ignore) {
-        }
-
-        super.onCreate();
-        Log.i(TAG, "init SMSdroid v", BuildConfig.VERSION_NAME);
-
-        final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
-        int state = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
-        if (p.getBoolean(PreferencesActivity.PREFS_ACTIVATE_SENDER, true)) {
-            try {
-                Cursor c = getContentResolver().query(SenderActivity.URI_SENT, PROJECTION,
-                        null, null, "_id LIMIT 1");
-                if (c == null) {
-                    Log.i(TAG, "disable .Sender: curor=null");
-                } else if (SmsManager.getDefault() == null) {
-                    Log.i(TAG, "disable .Sender: SmsManager=null");
-                } else {
-                    state = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
-                    Log.d(TAG, "enable .Sender");
-                }
-                if (c != null && !c.isClosed()) {
-                    c.close();
-                }
-            } catch (IllegalArgumentException | SQLiteException e) {
-                Log.e(TAG, "disable .Sender: ", e.getMessage(), e);
-            }
-        } else {
-            Log.i(TAG, "disable .Sender");
-        }
-        getPackageManager().setComponentEnabledSetting(
-                new ComponentName(this, SenderActivity.class), state, PackageManager.DONT_KILL_APP);
-    }
 
     /**
      * Get an {@link OnClickListener} for stating an Activity for given {@link Intent}.
@@ -142,5 +98,45 @@ public final class SMSdroid extends Application {
                 return false;
             }
         };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onCreate() {
+        try {
+            Class.forName("android.os.AsyncTask");
+        } catch (Throwable ignore) {
+        }
+
+        super.onCreate();
+        Log.i(TAG, "init SMSdroid v", BuildConfig.VERSION_NAME);
+
+        final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
+        int state = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+        if (p.getBoolean(PreferencesActivity.PREFS_ACTIVATE_SENDER, true)) {
+            try {
+                Cursor c = getContentResolver().query(SenderActivity.URI_SENT, PROJECTION,
+                        null, null, "_id LIMIT 1");
+                if (c == null) {
+                    Log.i(TAG, "disable .Sender: curor=null");
+                } else if (SmsManager.getDefault() == null) {
+                    Log.i(TAG, "disable .Sender: SmsManager=null");
+                } else {
+                    state = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
+                    Log.d(TAG, "enable .Sender");
+                }
+                if (c != null && !c.isClosed()) {
+                    c.close();
+                }
+            } catch (IllegalArgumentException | SQLiteException e) {
+                Log.e(TAG, "disable .Sender: ", e.getMessage(), e);
+            }
+        } else {
+            Log.i(TAG, "disable .Sender");
+        }
+        getPackageManager().setComponentEnabledSetting(
+                new ComponentName(this, SenderActivity.class), state, PackageManager.DONT_KILL_APP);
     }
 }

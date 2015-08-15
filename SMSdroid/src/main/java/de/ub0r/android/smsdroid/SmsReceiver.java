@@ -40,6 +40,7 @@ import android.telephony.SmsMessage;
 import android.util.TypedValue;
 import android.widget.Toast;
 import de.ub0r.android.logg0r.Log;
+import ir.arusha.android.sms_plus.R;
 import ir.arusha.android.sms_plus.filter.FilterManager;
 
 import java.util.regex.Matcher;

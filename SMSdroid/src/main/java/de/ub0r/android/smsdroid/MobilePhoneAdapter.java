@@ -27,6 +27,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
+import ir.arusha.android.sms_plus.R;
 
 /**
  * CursorAdapter getting Name, Phone from DB. This class requires android API5+ to work.
@@ -36,15 +37,21 @@ import android.widget.TextView;
 public class MobilePhoneAdapter extends ResourceCursorAdapter {
 
     /**
-     * Preferences: show mobile numbers only.
+     * Index of id/lookup key.
      */
-    private static boolean prefsMobilesOnly = false;
-
+    public static final int INDEX_ID = 0;
     /**
-     * Global ContentResolver.
+     * Index of name.
      */
-    private final ContentResolver mContentResolver;
-
+    public static final int INDEX_NAME = 1;
+    /**
+     * Index of number.
+     */
+    public static final int INDEX_NUMBER = 2;
+    /**
+     * Index of type.
+     */
+    public static final int INDEX_TYPE = 3;
     /**
      * Projection for content.
      */
@@ -53,27 +60,14 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
             Phone.NUMBER, // 2
             Phone.TYPE // 3
     };
-
     /**
-     * Index of id/lookup key.
+     * Preferences: show mobile numbers only.
      */
-    public static final int INDEX_ID = 0;
-
+    private static boolean prefsMobilesOnly = false;
     /**
-     * Index of name.
+     * Global ContentResolver.
      */
-    public static final int INDEX_NAME = 1;
-
-    /**
-     * Index of number.
-     */
-    public static final int INDEX_NUMBER = 2;
-
-    /**
-     * Index of type.
-     */
-    public static final int INDEX_TYPE = 3;
-
+    private final ContentResolver mContentResolver;
     /**
      * List of number types.
      */
@@ -91,14 +85,31 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
     }
 
     /**
-     * View holder.
+     * @param b set to true, if only mobile numbers should be displayed.
      */
-    private static class ViewHolder {
+    static void setMobileNumbersOnly(final boolean b) {
+        prefsMobilesOnly = b;
+    }
 
-        /**
-         * {@link TextView}s.
-         */
-        TextView tv1, tv2, tv3;
+    /**
+     * Clean recipient's phone number from [ -.()<>].
+     *
+     * @param recipient recipient's mobile number
+     * @return clean number
+     */
+    public static String cleanRecipient(final String recipient) {
+        if (TextUtils.isEmpty(recipient)) {
+            return "";
+        }
+        String n;
+        int i = recipient.indexOf("<");
+        int j = recipient.indexOf(">");
+        if (i != -1 && i < j) {
+            n = recipient.substring(recipient.indexOf("<"), recipient.indexOf(">"));
+        } else {
+            n = recipient;
+        }
+        return n.replaceAll("[^*#+0-9]", "").replaceAll("^[*#][0-9]*#", "");
     }
 
     /**
@@ -151,30 +162,13 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
     }
 
     /**
-     * @param b set to true, if only mobile numbers should be displayed.
+     * View holder.
      */
-    static void setMobileNumbersOnly(final boolean b) {
-        prefsMobilesOnly = b;
-    }
+    private static class ViewHolder {
 
-    /**
-     * Clean recipient's phone number from [ -.()<>].
-     *
-     * @param recipient recipient's mobile number
-     * @return clean number
-     */
-    public static String cleanRecipient(final String recipient) {
-        if (TextUtils.isEmpty(recipient)) {
-            return "";
-        }
-        String n;
-        int i = recipient.indexOf("<");
-        int j = recipient.indexOf(">");
-        if (i != -1 && i < j) {
-            n = recipient.substring(recipient.indexOf("<"), recipient.indexOf(">"));
-        } else {
-            n = recipient;
-        }
-        return n.replaceAll("[^*#+0-9]", "").replaceAll("^[*#][0-9]*#", "");
+        /**
+         * {@link TextView}s.
+         */
+        TextView tv1, tv2, tv3;
     }
 }

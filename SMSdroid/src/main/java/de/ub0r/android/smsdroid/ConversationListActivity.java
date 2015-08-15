@@ -44,6 +44,8 @@ import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
 import de.ub0r.android.logg0r.Log;
+import ir.arusha.android.sms_plus.BuildConfig;
+import ir.arusha.android.sms_plus.R;
 import ir.arusha.android.sms_plus.cache.PhoneNumberCache;
 import ir.arusha.android.sms_plus.date.DateLocalizer;
 import ir.arusha.android.sms_plus.filter.FilterManager;

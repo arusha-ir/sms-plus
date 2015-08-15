@@ -6,5 +6,5 @@ package com.actionbarsherlock;
 public class BuildConfig {
 
     // TODO remove this with next ABS release
-    public static final boolean DEBUG = de.ub0r.android.smsdroid.BuildConfig.DEBUG;
+    public static final boolean DEBUG = ir.arusha.android.sms_plus.BuildConfig.DEBUG;
 }

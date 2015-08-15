@@ -22,6 +22,7 @@ import android.content.Context;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
+import ir.arusha.android.sms_plus.R;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -37,22 +38,40 @@ import java.util.regex.Pattern;
 public final class SmileyParser {
 
     /**
+     * Smiley resources keys.
+     */
+    public static final int[] DEFAULT_SMILEY_RES_IDS = {R.drawable.emo_im_angel, // 0
+            R.drawable.emo_im_cool, // 1
+            R.drawable.emo_im_cool, // 2
+            R.drawable.emo_im_crying, // 3
+            R.drawable.emo_im_crying, // 4
+            R.drawable.emo_im_foot_in_mouth, // 5
+            R.drawable.emo_im_happy, // 6
+            R.drawable.emo_im_happy, // 7
+            R.drawable.emo_im_kissing, // 8
+            R.drawable.emo_im_kissing, // 9
+            R.drawable.emo_im_laughing, // 10
+            R.drawable.emo_im_laughing, // 11
+            R.drawable.emo_im_lips_are_sealed, // 12
+            R.drawable.emo_im_lips_are_sealed, // 13
+            R.drawable.emo_im_lips_are_sealed, // 14
+            R.drawable.emo_im_money_mouth, // 15
+            R.drawable.emo_im_sad, // 16
+            R.drawable.emo_im_sad, // 17
+            R.drawable.emo_im_surprised, // 18
+            R.drawable.emo_im_tongue_sticking_out, // 19
+            R.drawable.emo_im_tongue_sticking_out, // 20
+            R.drawable.emo_im_tongue_sticking_out, // 21
+            R.drawable.emo_im_undecided, // 22
+            R.drawable.emo_im_winking, // 23
+            R.drawable.emo_im_winking, // 24
+            R.drawable.emo_im_wtf, // 25
+            R.drawable.emo_im_yelling, // 26
+    };
+    /**
      * Singleton stuff.
      */
     private static SmileyParser sInstance;
-
-    /**
-     * Get the single instance.
-     *
-     * @return the {@link SmileyParser}
-     */
-    public static SmileyParser getInstance(final Context context) {
-        if (sInstance == null) {
-            sInstance = new SmileyParser(context);
-        }
-        return sInstance;
-    }
-
     /**
      * {@link Context}.
      */
@@ -91,36 +110,16 @@ public final class SmileyParser {
     // res/values/arrays.xml
 
     /**
-     * Smiley resources keys.
+     * Get the single instance.
+     *
+     * @return the {@link SmileyParser}
      */
-    public static final int[] DEFAULT_SMILEY_RES_IDS = {R.drawable.emo_im_angel, // 0
-            R.drawable.emo_im_cool, // 1
-            R.drawable.emo_im_cool, // 2
-            R.drawable.emo_im_crying, // 3
-            R.drawable.emo_im_crying, // 4
-            R.drawable.emo_im_foot_in_mouth, // 5
-            R.drawable.emo_im_happy, // 6
-            R.drawable.emo_im_happy, // 7
-            R.drawable.emo_im_kissing, // 8
-            R.drawable.emo_im_kissing, // 9
-            R.drawable.emo_im_laughing, // 10
-            R.drawable.emo_im_laughing, // 11
-            R.drawable.emo_im_lips_are_sealed, // 12
-            R.drawable.emo_im_lips_are_sealed, // 13
-            R.drawable.emo_im_lips_are_sealed, // 14
-            R.drawable.emo_im_money_mouth, // 15
-            R.drawable.emo_im_sad, // 16
-            R.drawable.emo_im_sad, // 17
-            R.drawable.emo_im_surprised, // 18
-            R.drawable.emo_im_tongue_sticking_out, // 19
-            R.drawable.emo_im_tongue_sticking_out, // 20
-            R.drawable.emo_im_tongue_sticking_out, // 21
-            R.drawable.emo_im_undecided, // 22
-            R.drawable.emo_im_winking, // 23
-            R.drawable.emo_im_winking, // 24
-            R.drawable.emo_im_wtf, // 25
-            R.drawable.emo_im_yelling, // 26
-    };
+    public static SmileyParser getInstance(final Context context) {
+        if (sInstance == null) {
+            sInstance = new SmileyParser(context);
+        }
+        return sInstance;
+    }
 
     /**
      * Builds the {@link HashMap} we use for mapping the string version of a smiley (e.g. ":-)") to

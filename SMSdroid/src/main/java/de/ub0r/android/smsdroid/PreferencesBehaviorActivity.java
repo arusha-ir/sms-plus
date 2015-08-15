@@ -24,8 +24,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.view.MenuItem;
-
 import de.ub0r.android.lib.IPreferenceContainer;
+import ir.arusha.android.sms_plus.R;
 
 /**
  * Preferences.

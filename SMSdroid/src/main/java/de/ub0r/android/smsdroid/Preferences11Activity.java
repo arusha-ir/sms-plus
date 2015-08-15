@@ -24,11 +24,11 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-
-import java.util.List;
-
 import de.ub0r.android.lib.IPreferenceContainer;
 import de.ub0r.android.lib.Utils;
+import ir.arusha.android.sms_plus.R;
+
+import java.util.List;
 
 /**
  * {@link PreferenceActivity} for API>=11.

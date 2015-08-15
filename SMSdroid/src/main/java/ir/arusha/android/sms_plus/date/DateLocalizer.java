@@ -6,7 +6,7 @@ import android.content.res.Resources;
 import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import de.ub0r.android.smsdroid.PreferencesActivity;
-import de.ub0r.android.smsdroid.R;
+import ir.arusha.android.sms_plus.R;
 
 /**
  * Created by maJid~ASGARI on 8/15/2015.

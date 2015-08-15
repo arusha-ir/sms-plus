@@ -26,8 +26,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.RemoteViews;
-
 import de.ub0r.android.logg0r.Log;
+import ir.arusha.android.sms_plus.R;
 
 /**
  * A widget provider.
@@ -38,16 +38,6 @@ public final class WidgetProvider extends AppWidgetProvider {
      * Tag for output.
      */
     private static final String TAG = "wdp";
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onUpdate(final Context context, final AppWidgetManager appWidgetManager,
-            final int[] appWidgetIds) {
-        Log.d(TAG, "onUpdate");
-        SmsReceiver.updateNewMessageNotification(context, null);
-    }
 
     /**
      * Get {@link RemoteViews}.
@@ -77,5 +67,15 @@ public final class WidgetProvider extends AppWidgetProvider {
             Log.d(TAG, "set pending intent: ", pIntent.toString());
         }
         return views;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onUpdate(final Context context, final AppWidgetManager appWidgetManager,
+                         final int[] appWidgetIds) {
+        Log.d(TAG, "onUpdate");
+        SmsReceiver.updateNewMessageNotification(context, null);
     }
 }

@@ -46,6 +46,7 @@ import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
 import de.ub0r.android.logg0r.Log;
+import ir.arusha.android.sms_plus.R;
 
 /**
  * {@link FragmentActivity} showing a single conversation.

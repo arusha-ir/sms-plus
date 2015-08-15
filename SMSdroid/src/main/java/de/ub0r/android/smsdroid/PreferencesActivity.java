@@ -36,6 +36,7 @@ import android.widget.Toast;
 import de.ub0r.android.lib.IPreferenceContainer;
 import de.ub0r.android.lib.Utils;
 import de.ub0r.android.logg0r.Log;
+import ir.arusha.android.sms_plus.R;
 import yuku.ambilwarna.AmbilWarnaDialog;
 import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
 

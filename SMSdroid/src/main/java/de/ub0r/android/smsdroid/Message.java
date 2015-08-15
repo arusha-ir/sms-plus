@@ -33,6 +33,7 @@ import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.Toast;
 import de.ub0r.android.logg0r.Log;
+import ir.arusha.android.sms_plus.R;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;

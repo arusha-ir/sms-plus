@@ -3,8 +3,8 @@ package ir.arusha.android.sms_plus.filter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.Toast;
-import de.ub0r.android.smsdroid.R;
 import de.ub0r.android.smsdroid.SpamDB;
+import ir.arusha.android.sms_plus.R;
 import ir.arusha.android.sms_plus.white_list.WhiteListDB;
 
 import java.util.Collections;

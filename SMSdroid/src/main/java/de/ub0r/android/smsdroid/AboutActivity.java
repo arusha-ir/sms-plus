@@ -18,11 +18,12 @@
  */
 package de.ub0r.android.smsdroid;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.MenuItem;
-
 import android.content.Intent;
 import android.os.Bundle;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
+import ir.arusha.android.sms_plus.BuildConfig;
+import ir.arusha.android.sms_plus.R;
 
 /**
  * Display About {@link SherlockActivity}.

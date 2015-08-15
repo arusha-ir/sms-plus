@@ -30,6 +30,7 @@ import android.view.View.OnClickListener;
 import android.widget.*;
 import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.logg0r.Log;
+import ir.arusha.android.sms_plus.R;
 
 /**
  * Adapter for the list of {@link Conversation}s.
