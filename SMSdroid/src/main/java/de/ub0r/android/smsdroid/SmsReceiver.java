@@ -117,7 +117,7 @@ public class SmsReceiver extends BroadcastReceiver {
     private static String lastUnreadBody = null;
 
     static void handleOnReceive(final BroadcastReceiver receiver, final Context context,
-            final Intent intent) {
+                                final Intent intent) {
         final String action = intent.getAction();
         Log.d(TAG, "onReceive(context, ", action, ")");
         final PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
@@ -238,6 +238,7 @@ public class SmsReceiver extends BroadcastReceiver {
         Log.d(TAG, "getUnreadSMS(cr, ", text, ")");
         Cursor cursor = cr.query(URI_SMS, Message.PROJECTION, Message.SELECTION_READ_UNREAD,
                 Message.SELECTION_UNREAD, SORT);
+        Log.d(TAG, "Projection: " + cursor.getCount());
 
         //Cursor cursor = cr.query(URI_SMS, null, null, null, null);
 
@@ -626,7 +627,7 @@ public class SmsReceiver extends BroadcastReceiver {
      * @param resultCode message status
      */
     private static void handleSent(final Context context, final Intent intent,
-            final int resultCode) {
+                                   final int resultCode) {
         final Uri uri = intent.getData();
         Log.d(TAG, "sent message: ", uri, ", rc: ", resultCode);
         if (uri == null) {
@@ -658,21 +659,33 @@ public class SmsReceiver extends BroadcastReceiver {
             Log.w(TAG, "handleDelivered(null)");
             return;
         }
-
         if (resultCode == Activity.RESULT_OK) {
-            //TODO delivery in DB
             final ContentValues cv = new ContentValues(1);
             cv.put(SenderActivity.STATUS, SenderActivity.STATUS_COMPLETE);
             context.getContentResolver().update(uri, cv, null, null);
-            Toast.makeText(context, "SMS Delivered", Toast.LENGTH_LONG).show();
+            final String number = intent.getStringExtra("number");
+            Toast.makeText(context, context.getString(R.string.delivered) + (number == null ? "" : ": " + number),
+                    Toast.LENGTH_LONG).show();
         } else {
-            //TODO not delivered in DB
+            final ContentValues cv = new ContentValues(1);
+            cv.put(SenderActivity.STATUS, SenderActivity.STATUS_FAILED);
+            context.getContentResolver().update(uri, cv, null, null);
+            final String number = intent.getStringExtra("number");
+            Toast.makeText(context, context.getString(R.string.not_delivered) + (number == null ? "" : ": " + number),
+                    Toast.LENGTH_LONG).show();
         }
+        Message.flushCache();
+        MessageListActivity.refreshList();
     }
 
     @Override
     public final void onReceive(final Context context, final Intent intent) {
         handleOnReceive(this, context, intent);
-        if (!intent.getAction().endsWith("MESSAGE_RECEIVED")) abortBroadcast();
+        try {
+            if (!intent.getAction().endsWith(SenderActivity.MESSAGE_SENT_ACTION)
+                    && !intent.getAction().endsWith(SenderActivity.MESSAGE_DELIVERED_ACTION))
+                abortBroadcast();
+        } catch (Throwable ignored) {
+        }
     }
 }

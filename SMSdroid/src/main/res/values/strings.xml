@@ -238,4 +238,6 @@
     <string name="delivery_report_hint">Activate delivery reports to notify when message delivered.</string>
     <string name="shamsi_">Show Shamsi dates</string>
     <string name="shamsi_hint">Show Shamsi dates instead Geregorian</string>
+    <string name="delivered">Message has been delivered</string>
+    <string name="not_delivered">Message hasn\'t been delivered.</string>
 </resources>

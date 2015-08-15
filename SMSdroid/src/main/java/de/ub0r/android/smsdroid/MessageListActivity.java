@@ -108,6 +108,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
      * Package name for System's chooser.
      */
     private static String chooserPackage = null;
+    private static MessageListActivity current;
     /**
      * Dialog items shown if an item was long clicked.
      */
@@ -124,47 +125,43 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
      * Marked a message unread?
      */
     private boolean markedUnread = false;
-
     /**
      * {@link EditText} holding text.
      */
     private EditText etText;
-
     /**
      * {@link ClipboardManager}.
      */
     @SuppressWarnings("deprecation")
     private ClipboardManager cbmgr;
-
     /**
      * Enable autosend.
      */
     private boolean enableAutosend = true;
-
     /**
      * Show textfield.
      */
     private boolean showTextField = true;
-
     /**
      * Show {@link Contact}'s photo.
      */
     private boolean showPhoto = false;
-
     /**
      * Default {@link Drawable} for {@link Contact}s.
      */
     private Drawable defaultContactAvatar = null;
-
     /**
      * {@link MenuItem} holding {@link Contact}'s picture.
      */
     private MenuItem contactItem = null;
-
     /**
      * True, to update {@link Contact}'s photo.
      */
     private boolean needContactUpdate = false;
+
+    public static void refreshList() {
+        if(current != null) current.getListView().invalidateViews();
+    }
 
     /**
      * Get {@link ListView}.
@@ -420,7 +417,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
     @Override
     protected final void onResume() {
         super.onResume();
-
+        current = this;
         final ListView lv = getListView();
         lv.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         lv.setAdapter(new MessageAdapter(this, uri));
@@ -476,6 +473,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
             setRead();
         }
         super.onPause();
+        current = null;
     }
 
     @Override

@@ -109,7 +109,7 @@
     <string name="notification_black_">مشکی</string>
     <string name="notification_green_">سبز</string>
     <string name="notification_yellow_">زرد</string>
-    <string name="bubbles_in_">حباب در</string>
+    <string name="bubbles_in_">حباب ورودی</string>
     <string name="bubbles_in_hint">حباب برای پیام‌های دریافتی</string>
     <string name="bubbles_out_">حباب خروجی</string>
     <string name="bubbles_out_hint">حباب برای پیام‌های خروجی</string>
@@ -224,4 +224,6 @@
     <string name="delivery_report_hint">فعال کردن آگاه‌سازی وقتی که پیام تحویل می‌شود.</string>
     <string name="shamsi_">نمایش تاریخ شمسی</string>
     <string name="shamsi_hint">نمایش تاریخ شمسی به جای میلادی.</string>
+    <string name="delivered">پیام تحویل داده شد</string>
+    <string name="not_delivered">نتوانستیم پیام را به مخاطب تحویل دهیم</string>
 </resources>

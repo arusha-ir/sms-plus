@@ -322,6 +322,7 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
                 sentIntents.add(PendingIntent.getBroadcast(this, 0, sent, 0));
                 if (deliveryReport) {
                     final Intent delivered = new Intent(MESSAGE_DELIVERED_ACTION, draft, this, SmsReceiver.class);
+                    delivered.putExtra("number", recipient);
                     deliveryIntents.add(PendingIntent.getBroadcast(this, 0, delivered, 0));
                 }
             }
