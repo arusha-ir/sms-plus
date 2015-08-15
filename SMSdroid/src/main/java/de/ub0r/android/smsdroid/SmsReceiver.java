@@ -195,6 +195,7 @@ public class SmsReceiver extends BroadcastReceiver {
                                 values);
                         Log.d(TAG, "Insert SMS into database: ", s, ", ", t);
                     }
+                    addSMS(context, smsMessage[0].getOriginatingAddress(), System.currentTimeMillis(), t);
                 }
             } else if (ACTION_MMS_OLD.equals(action) || ACTION_MMS_MEW.equals(action)) {
                 t = MMS_BODY;
@@ -678,12 +679,25 @@ public class SmsReceiver extends BroadcastReceiver {
         MessageListActivity.refreshList();
     }
 
+    private static void addSMS(Context context, String address, long date, String body) {
+        Uri uri = Uri.parse("content://sms/");
+        ContentValues cv2 = new ContentValues();
+        cv2.put("address", address);
+        cv2.put("date", String.valueOf(date));
+        cv2.put("read", 0);//not read yet
+        cv2.put("type", Message.SMS_IN);//received message
+        cv2.put("body", body);
+        context.getContentResolver().insert(uri, cv2);
+        /** This is very important line to solve the problem */
+        context.getContentResolver().delete(Uri.parse("content://sms/conversations/-1"), null, null);
+        cv2.clear();
+    }
+
     @Override
     public final void onReceive(final Context context, final Intent intent) {
         handleOnReceive(this, context, intent);
         try {
-            if (!intent.getAction().endsWith(SenderActivity.MESSAGE_SENT_ACTION)
-                    && !intent.getAction().endsWith(SenderActivity.MESSAGE_DELIVERED_ACTION))
+            if (!intent.getAction().endsWith(SenderActivity.MESSAGE_SENT_ACTION))
                 abortBroadcast();
         } catch (Throwable ignored) {
         }
