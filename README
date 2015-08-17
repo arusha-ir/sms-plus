@@ -1,3 +1,12 @@
+SMS+ is a frok from SMSdroid project
++ Message filtering [automcatic filtering, whitelists, blacklists]
++ SMS Delivery
++ UI enhancements
+- Google Ads
+
+The main project (SMS Droid) is here:
+https://github.com/felixb/smsdroid
+
 You will need ub0rlib [1] and ActionBarSherlock 4.x [2] to compile this code.
 
 [1] http://github.com/felixb/ub0rlib/
