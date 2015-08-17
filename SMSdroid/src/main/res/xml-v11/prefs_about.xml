@@ -20,7 +20,7 @@
     <PreferenceScreen android:title="@string/about_"
                       android:summary="@string/about_hint">
         <intent android:action="android.intent.action.MAIN"
-                android:targetPackage="de.ub0r.android.smsdroid"
+                android:targetPackage="ir.arusha.android.sms_plus"
                 android:targetClass="de.ub0r.android.smsdroid.AboutActivity"/>
     </PreferenceScreen>
     <PreferenceScreen android:title="@string/feedback_"

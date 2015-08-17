@@ -202,9 +202,10 @@
     <string name="forwarded_sms_clean_hint">ارسال کننده در پیام کوتاه دریافتی را بر اساس "([0-9a-zA-Z]+):" تغییر می‌دهد و آن شماره را به عنوان ارسال کننده استفاده می کند.</string>
     <string name="error_unknown">ایراد ناشناخته</string>
     <string name="donate_remove_ads_">اهدا/حذف تبلیغات</string>
-    <string name="show_filtered_messages_">تغییر فیلتر</string>
-    <string name="click_again_to_filter">برای فیلتر شدن پیام‌ها دوباره کلیک کنید.</string>
-    <string name="click_again_to_unfilter">برای نمایش همه پیام‌ها دوباره کلیک کنید.</string>
+    <string name="show_filtered_messages_">تغییر وضعیت فیلتر</string>
+    <string name="click_again_to_filter">همه پیام ها نمایش داده می شوند. برای فیلتر شدن پیام‌ها دوباره کلیک کنید.
+    </string>
+    <string name="click_again_to_unfilter">پیام ها فیلتر شدند. برای نمایش همه پیام‌ها دوباره کلیک کنید.</string>
     <string name="add_to_white_list">اضافه کردن به لیست سفید</string>
     <string name="remove_from_white_list">حذف کردن از لیست سفید</string>
     <string name="sender_me">من</string>

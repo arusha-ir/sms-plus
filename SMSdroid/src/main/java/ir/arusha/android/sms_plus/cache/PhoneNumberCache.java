@@ -12,7 +12,7 @@ import java.util.HashMap;
  */
 public class PhoneNumberCache {
     private static final String TAG = "cache_file";
-    private static final HashMap<Integer, String> numbers = new HashMap<>();
+    private static final HashMap<String, String> numbers = new HashMap<>();
     private static File cacheFile;
     private static Context context;
     private static boolean needWrite = false;
@@ -28,7 +28,7 @@ public class PhoneNumberCache {
             in = new BufferedReader(new FileReader(cacheFile), 1024);
             while ((sCurrentLine = in.readLine()) != null) {
                 final String[] splits = sCurrentLine.split("~");
-                numbers.put(Integer.parseInt(splits[0]), splits[1]);
+                numbers.put(splits[0], splits[1]);
             }
         } catch (Exception e) {
             Log.d(TAG, "error in reading file", e);
@@ -43,7 +43,7 @@ public class PhoneNumberCache {
         }
     }
 
-    public static String getNumber(final Integer contactId) {
+    public static String getNumber(final String contactId) {
         String number = numbers.get(contactId);
         if (number != null) return number;
         final Contact contact = new Contact(contactId);
@@ -65,7 +65,7 @@ public class PhoneNumberCache {
             BufferedWriter out = null;
             try {
                 out = new BufferedWriter(new FileWriter(cacheFile), 1024);
-                for (Integer key : numbers.keySet()) {
+                for (String key : numbers.keySet()) {
                     String value = numbers.get(key);
                     out.write(key + "~" + value);
                     out.newLine();

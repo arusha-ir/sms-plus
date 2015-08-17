@@ -37,8 +37,7 @@ public class FilterCursorWrapper extends CursorWrapper {
         }
     }
 
-    public boolean isHidden(String path) {
-        int contactId = Integer.parseInt(path);
+    public boolean isHidden(String contactId) {
         final String number = PhoneNumberCache.getNumber(contactId);
         return FilterManager.isFiltered(number, false);
     }

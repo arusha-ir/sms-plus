@@ -218,8 +218,9 @@
     <string name="error_unknown">Unknown error</string>
     <string name="donate_remove_ads_">Donate/remove ads</string>
     <string name="show_filtered_messages_">Toggle filtering</string>
-    <string name="click_again_to_filter">Click again to filter messages.</string>
-    <string name="click_again_to_unfilter">Click again to show all messages.</string>
+    <string name="click_again_to_filter">Showing all messages. Click again to filter messages.</string>
+    <string name="click_again_to_unfilter">Some of messages have been filtered. Click again to show all messages.
+    </string>
     <string name="add_to_white_list">Add to white list</string>
     <string name="remove_from_white_list">Remove from white list</string>
     <string name="digit_0">0</string>
