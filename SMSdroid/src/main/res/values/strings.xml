@@ -23,7 +23,9 @@
     <string name="feedback_">Feedback</string>
     <string name="feedback_hint">Report bugs, request features ...</string>
     <string name="google_plus_hint">Follow me on Google+.\nGet update notifications etc.</string>
-    <string name="about0">SMS+ lets you read your sms and write sms with any other app.</string>
+    <string name="about0">SMS+ is a SMS application which can filter advertisement messages (auto filter, white list and
+        blacklist). It\'s free and hasn\'t any ads!
+    </string>
     <string name="more_apps_">More Apps..</string>
     <string name="settings">Preferences</string>
     <string name="new_message_">New message</string>

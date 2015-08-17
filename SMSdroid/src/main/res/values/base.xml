@@ -23,7 +23,7 @@
 	<string name="google_plus_">Google+</string>
 	<string name="author">Hamrah Resaneh Arusha</string>
 	<string name="source">https://github.com/majidasgari/smsdroid</string>
-	<string name="website">http://www.arusha.ir</string>
+	<string name="website">http://arusha.ir</string>
 	<string name="DATEFORMAT_details">dd.MM.yyyy kk:mm</string>
 	<string-array name="themes_values">
 		<item>black</item>

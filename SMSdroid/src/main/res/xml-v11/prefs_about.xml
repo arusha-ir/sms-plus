@@ -26,7 +26,7 @@
     <PreferenceScreen android:title="@string/feedback_"
                       android:summary="@string/feedback_hint">
         <intent android:action="android.intent.action.VIEW"
-                android:data="https://github.com/majidasgari/smsdroid/issues"/>
+                android:data="https://github.com/arusha-ir/sms-plus/issues"/>
     </PreferenceScreen>
     <!--<PreferenceScreen android:title="@string/google_plus_"-->
     <!--android:summary="@string/google_plus_hint">-->

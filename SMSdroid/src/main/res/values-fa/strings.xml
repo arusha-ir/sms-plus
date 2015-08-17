@@ -6,7 +6,9 @@
     <string name="feedback_">بازخورد</string>
     <string name="feedback_hint">باگ‌ها را گزارش دهید، ویژگی‌هایی را درخواست کنید.</string>
     <string name="google_plus_hint">مار را در Google+ دنبال کنید.\nیادآوری‌های آپدیت را بگیرید و ...</string>
-    <string name="about0">SMS+ نمی‌گذارد پیامک‌های تبلیغاتی شما را خسته کنند.</string>
+    <string name="about0">SMS+ یک برنامه پیامرسانی است که روی فیلتر کردن پیام های تبلیغاتی تمرکز کرده است. این برنامه از
+        فیلترینگ خودکار، لیست سفید و لیست سیاه پشتیبانی می کند. این برنامه مجانی است و هیچ تبلیغاتی ندارد.
+    </string>
     <string name="more_apps_">برنامه‌های بیشتر</string>
     <string name="settings">تنظیمات</string>
     <string name="new_message_">پیام جدید</string>
