@@ -18,7 +18,8 @@
           package="ir.arusha.android.sms_plus"
           android:installLocation="internalOnly"
           android:versionCode="9165000"
-          android:versionName="1.6.5">
+          android:versionName="1.0.0"
+          android:supportsRtl="true">
 
     <supports-screens
             android:anyDensity="true"

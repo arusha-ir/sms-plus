@@ -196,7 +196,8 @@ public class SmsReceiver extends BroadcastReceiver {
                                 values);
                         Log.d(TAG, "Insert SMS into database: ", s, ", ", t);
                     }
-                    addSMS(context, smsMessage[0].getOriginatingAddress(), System.currentTimeMillis(), t);
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
+                        addSMS(context, smsMessage[0].getOriginatingAddress(), System.currentTimeMillis(), t);
                 }
             } else if (ACTION_MMS_OLD.equals(action) || ACTION_MMS_MEW.equals(action)) {
                 t = MMS_BODY;

@@ -243,4 +243,5 @@
     <string name="shamsi_hint">Show Shamsi dates instead Geregorian</string>
     <string name="delivered">Message has been delivered</string>
     <string name="not_delivered">Message hasn\'t been delivered.</string>
+    <string name="direction">ltr</string>
 </resources>

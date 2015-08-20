@@ -19,6 +19,7 @@
 <resources>
 	<string name="app_name">SMS+</string>
 	<string name="sender_name">SMS</string>
+	<string name="version">1.0.0</string>
 	<string name="faq_">FAQ</string>
 	<string name="google_plus_">Google+</string>
 	<string name="author">Hamrah Resaneh Arusha</string>

@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
-import ir.arusha.android.sms_plus.BuildConfig;
 import ir.arusha.android.sms_plus.R;
 
 /**
@@ -40,7 +39,7 @@ public final class AboutActivity extends SherlockActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about);
         setTitle(getString(R.string.about_) + " " + getString(R.string.app_name)
-                + " v" + BuildConfig.VERSION_NAME);
+                + " v" + getString(R.string.version));
     }
 
     /**

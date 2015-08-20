@@ -46,7 +46,10 @@ public class PhoneNumberCache {
     public static String getNumber(final String contactId) {
         String number = numbers.get(contactId);
         if (number != null) return number;
-        final Contact contact = new Contact(Integer.parseInt(contactId));
+        final Contact contact;
+        //merged contacts in huawei
+        if (contactId.contains(" ")) contact = new Contact(Integer.parseInt(contactId.split("\\s+")[0]));
+        else contact = new Contact(Integer.parseInt(contactId));
         contact.update(context, true, false);
         number = contact.getNumber();
         //convert null to empty string to distinguish between null and "number which could not to obtained"
