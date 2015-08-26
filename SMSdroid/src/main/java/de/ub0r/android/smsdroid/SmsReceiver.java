@@ -432,7 +432,8 @@ public class SmsReceiver extends BroadcastReceiver {
                         } else {
                             a = conv.getContact().getDisplayName();
                         }
-                        showNotification = true;
+                        final String number = conv.getContact().getNumber();
+                        showNotification = !FilterManager.isFiltered(number, false);
                         nb.setSmallIcon(PreferencesActivity.getNotificationIcon(context));
                         nb.setTicker(a);
                         nb.setWhen(lastUnreadDate);
