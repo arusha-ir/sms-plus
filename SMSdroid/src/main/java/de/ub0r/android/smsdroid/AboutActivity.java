@@ -19,6 +19,8 @@
 package de.ub0r.android.smsdroid;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -38,8 +40,14 @@ public final class AboutActivity extends SherlockActivity {
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about);
-        setTitle(getString(R.string.about_) + " " + getString(R.string.app_name)
-                + " v" + getString(R.string.version));
+        PackageManager manager = getPackageManager();
+        try {
+            final PackageInfo info = manager.getPackageInfo(getPackageName(), 0);
+            setTitle(getString(R.string.about_) + " " + getString(R.string.app_name)
+                    + " v" + info.versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            setTitle(getString(R.string.about_) + " " + getString(R.string.app_name));
+        }
     }
 
     /**
