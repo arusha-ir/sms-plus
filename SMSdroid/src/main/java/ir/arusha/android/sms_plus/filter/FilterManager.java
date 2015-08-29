@@ -65,6 +65,10 @@ public class FilterManager {
         }
     }
 
+    public static boolean isFilteringOn() {
+        return !showAll;
+    }
+
     private static String replace(String string) {
         if (string == null) return null;
         for (String[] replace : replaces)

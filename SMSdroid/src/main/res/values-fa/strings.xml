@@ -230,4 +230,7 @@
     <string name="delivered">پیام تحویل داده شد</string>
     <string name="not_delivered">نتوانستیم پیام را به مخاطب تحویل دهیم</string>
     <string name="direction">rtl</string>
+    <string name="filter_status_all">پیام ها فیلتر نشده اند.</string>
+    <string name="filter_status_filtered">فیلتر پیام ها روشن است.</string>
+    <string name="change">تغییر</string>
 </resources>

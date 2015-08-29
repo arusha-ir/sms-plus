@@ -12,16 +12,16 @@
     </string-array>
 
     <string-array name="whiteNumbers">
-        <item>0200035</item>
-        <item>02000300</item>
-        <item>0990009</item>
-        <item>050001544</item>
-        <item>0988080</item>
-        <item>0988055</item>
-        <item>0988055</item>
-        <item>0200090</item>
-        <item>0300028103</item>
-        <item>02000313313</item>
+        <!--<item>0200035</item>-->
+        <!--<item>02000300</item>-->
+        <!--<item>0990009</item>-->
+        <!--<item>050001544</item>-->
+        <!--<item>0988080</item>-->
+        <!--<item>0988055</item>-->
+        <!--<item>0988055</item>-->
+        <!--<item>0200090</item>-->
+        <!--<item>0300028103</item>-->
+        <!--<item>02000313313</item>-->
     </string-array>
 
 </resources>

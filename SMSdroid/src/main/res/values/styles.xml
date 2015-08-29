@@ -19,6 +19,9 @@
     <color name="actionbar_text_color">#FFF0F0F0</color>
     <color name="ubActionBarBackgroundDark">#FF000000</color>
     <color name="ubActionBarBackgroundLight">#FFFFFFFF</color>
+    <color name="filteredColor">#ff206b33</color>
+    <color name="notFilteredColor">#ffff0000</color>
+    <color name="headerColor">#ff5eb9d2</color>
 
     <declare-styleable name="Ub0rButtonBar">
         <attr name="ubButtonBarBackground" format="reference" />

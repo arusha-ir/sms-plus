@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
-    android:src="@drawable/bg_striped_split_img"
-    android:tileMode="repeat"
-    android:dither="true" />
+<color xmlns:android="http://schemas.android.com/apk/res/android"
+       android:color="@color/headerColor"
+       android:tileMode="repeat"
+       android:dither="true"/>

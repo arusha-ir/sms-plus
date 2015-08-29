@@ -244,4 +244,7 @@
     <string name="delivered">Message has been delivered</string>
     <string name="not_delivered">Message hasn\'t been delivered.</string>
     <string name="direction">ltr</string>
+    <string name="filter_status_all">Messages haven\'t been filtered.</string>
+    <string name="filter_status_filtered">Message filtering is on.</string>
+    <string name="change">Change</string>
 </resources>

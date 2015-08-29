@@ -14,14 +14,43 @@
 		copy of the GNU General Public License along with this program; If
 		not, see <http://www.gnu.org/licenses/>.
 -->
-<GridView xmlns:android="http://schemas.android.com/apk/res/android"
-          android:id="@android:id/list"
-          android:layout_width="fill_parent"
-          android:layout_height="fill_parent"
-          android:background="?android:attr/colorBackground"
-          android:columnWidth="120dp"
-          android:horizontalSpacing="1dp"
-          android:numColumns="auto_fit"
-          android:scrollingCache="true"
-          android:stretchMode="columnWidth"
-          android:verticalSpacing="1dp"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@android:id/list"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:layout_weight="1"
+              android:background="?android:attr/colorBackground"
+              android:columnWidth="120dp"
+              android:horizontalSpacing="1dp"
+              android:numColumns="auto_fit"
+              android:scrollingCache="true"
+              android:stretchMode="columnWidth"
+              android:verticalSpacing="1dp"/>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:gravity="center_horizontal"
+                    android:padding="2dp" android:id="@+id/filterLayout">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filter_status_all"
+                android:layout_alignParentLeft="true"
+                android:id="@+id/filterStatus" android:layout_gravity="center_horizontal"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/change"
+                android:id="@+id/changeFilter"
+                android:layout_marginLeft="2dp"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/filterStatus"
+                android:clickable="true"/>
+    </RelativeLayout>
+</LinearLayout>

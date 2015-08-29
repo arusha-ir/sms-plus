@@ -26,6 +26,7 @@ import android.content.*;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -51,6 +52,7 @@ import ir.arusha.android.sms_plus.date.DateLocalizer;
 import ir.arusha.android.sms_plus.filter.FilterManager;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Main {@link SherlockActivity} showing conversations.
@@ -400,6 +402,36 @@ public final class ConversationListActivity extends SherlockActivity implements
         } else {
             setContentView(R.layout.conversationlist);
         }
+        TextView filterStatusTV = (TextView) findViewById(R.id.filterStatus);
+        filterStatusTV.setText(FilterManager.isFilteringOn()
+                ? R.string.filter_status_filtered : R.string.filter_status_all);
+        filterStatusTV.setTextColor(FilterManager.isFilteringOn()
+                ? getResources().getColor(R.color.filteredColor)
+                : getResources().getColor(R.color.notFilteredColor));
+        TextView changeStatusTV = (TextView) findViewById(R.id.changeFilter);
+        changeStatusTV.setPaintFlags(changeStatusTV.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        changeStatusTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleFilter();
+            }
+        });
+
+        //rtl direction (end/start alignments) is not supported
+        final Locale locale = getResources().getConfiguration().locale;
+        if (locale.getLanguage().startsWith("fa")) {
+            final RelativeLayout.LayoutParams filterStatusLayoutParams = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+            filterStatusLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 1);
+            filterStatusTV.setLayoutParams(filterStatusLayoutParams);
+            final RelativeLayout.LayoutParams changeStatusLayoutParams = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+            changeStatusLayoutParams.addRule(RelativeLayout.LEFT_OF, R.id.filterStatus);
+            changeStatusLayoutParams.setMargins(0, 0, 2, 0);
+            changeStatusTV.setLayoutParams(changeStatusLayoutParams);
+        }
 
         // debug info
         showRows(this);
@@ -525,12 +557,16 @@ public final class ConversationListActivity extends SherlockActivity implements
                 markRead(this, Uri.parse("content://mms/"), 1);
                 return true;
             case R.id.item_filter:
-                FilterManager.toggleShowAll();
-                restartActivity();
+                toggleFilter();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void toggleFilter() {
+        FilterManager.toggleShowAll();
+        restartActivity();
     }
 
     private void restartActivity() {
