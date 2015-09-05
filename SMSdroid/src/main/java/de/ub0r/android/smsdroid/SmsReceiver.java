@@ -195,8 +195,7 @@ public class SmsReceiver extends BroadcastReceiver {
                         context.getContentResolver().insert(Uri.parse("content://sms/inbox"),
                                 values);
                         Log.d(TAG, "Insert SMS into database: ", s, ", ", t);
-                    }
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
+                    } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
                         addSMS(context, smsMessage[0].getOriginatingAddress(), System.currentTimeMillis(), t);
                 }
             } else if (ACTION_MMS_OLD.equals(action) || ACTION_MMS_MEW.equals(action)) {
@@ -204,7 +203,7 @@ public class SmsReceiver extends BroadcastReceiver {
                 // TODO API19+ MMS code
             }
 
-            if (!silent) {
+            if (!silent && ACTION_SMS_OLD.equals(action)) {
                 Log.d(TAG, "t: ", t);
                 int count = MAX_SPINS;
                 do {
@@ -513,7 +512,8 @@ public class SmsReceiver extends BroadcastReceiver {
                 final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
                 if (text != null) {
                     final boolean vibrate = p.getBoolean(PreferencesActivity.PREFS_VIBRATE, false);
-                    final String s = p.getString(PreferencesActivity.PREFS_SOUND, null);
+                    final String s = p.getString(PreferencesActivity.PREFS_SOUND,
+                            "content://settings/system/notification_sound");
                     Uri sound;
                     if (s == null || s.length() <= 0) {
                         sound = null;

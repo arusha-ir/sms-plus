@@ -45,8 +45,8 @@
     <string name="textsize_hint">سایز متن به پیکسل؛ برای استفاده از مقدار پیش‌فرض آن را خالی بگذارید.</string>
     <string name="textcolor_">رنگ متن</string>
     <string name="textcolor_hint">رنگ متن پیام</string>
-    <string name="textcolor_ignore_conv_">نادیده گرفتن رنگ متن برای نخ‌ها</string>
-    <string name="textcolor_ignore_conv_hint">نادیده گرفتن رنگ متن برای نخ‌ها.</string>
+    <string name="textcolor_ignore_conv_">نادیده گرفتن رنگ متن برای گفتگو‌ها</string>
+    <string name="textcolor_ignore_conv_hint">نادیده گرفتن رنگ متن برای گفتگو‌ها.</string>
     <string name="show_contact_photo_">نمایش تصویر مخاطب</string>
     <string name="show_contact_photo_hint">تصویر مخاطب را در لیست گفتگو نمایش بده.</string>
     <string name="show_emoticons_">نمایش شکلک‌ها</string>
@@ -59,8 +59,8 @@
     <string name="hide_paste_hint">پنهان کردن دکمه "چسباندن" در فیلد متن.</string>
     <string name="hide_widget_label_">پنهان کردن برچسب ویجت</string>
     <string name="hide_widget_label_hint">پنهان کردن برچسب ویجت.</string>
-    <string name="hide_delete_all_threads_">پنهان کردن پاک کردن همه نخ‌ها</string>
-    <string name="hide_delete_all_threads_hint">پنهان کردن گزینه پاک کردن همه نخ‌ها در منو.</string>
+    <string name="hide_delete_all_threads_">پنهان کردن حذف همه گفتگو‌ها</string>
+    <string name="hide_delete_all_threads_hint">پنهان کردن گزینه حذف همه گفتگو‌ها در منو.</string>
     <string name="hide_message_count_">عدم نمایش تعداد پیام‌ها</string>
     <string name="hide_message_count_hint">عدم نمایش تعداد پیام‌ها در لیست گفتگو.</string>
     <string name="show_full_date_">نمایش تاریخ کامل</string>
@@ -68,22 +68,25 @@
     <string name="me">من</string>
     <string name="view_contact_">نمایش مخاطب</string>
     <string name="add_contact_">افزودن به مخاطبین</string>
-    <string name="view_thread_">نمایش نخ</string>
+    <string name="view_thread_">نمایش گفتگو</string>
     <string name="filter_spam_">افزودن به لیست سیاه</string>
     <string name="dont_filter_spam_">حذف از لیست سیاه</string>
-    <string name="delete_message_">پایک کردن پیام</string>
-    <string name="delete_thread_">پاک کردن نخ</string>
+    <string name="delete_message_">حذف پیام</string>
+    <string name="delete_thread_">حذف گفتگو</string>
     <string name="forward_">بازارسال</string>
     <string name="send_draft_">ارسال پیش‌نویس</string>
     <string name="copy_text_">کپی کردن متن پیام</string>
     <string name="view_details_">نمایش جزییات پیام</string>
-    <string name="delete_threads_">پاک کردن همه نخ‌ها</string>
+    <string name="delete_threads_">حذف همه گفتگو‌ها</string>
     <string name="mark_all_read_">علامت گذاری همه به عنوان خوانده شده</string>
     <string name="mark_read_">علامت‌گذاری به عنوان خوانده شده</string>
     <string name="mark_unread_">علامت‌گذاری به عنوان خوانده نشده</string>
     <string name="message_options_">تنظیمات پیام</string>
     <string name="delete_message_question">واقعا می‌‌خواهید این پیام را پاک کنید؟</string>
-    <string name="delete_thread_question">واقعا می‌‌خواهید <b>همه پیام‌های این نخ</b> را پاک کنید؟</string>
+    <string name="delete_thread_question">واقعا می‌‌خواهید
+        <b>همه پیام‌های این گفتگو</b>
+        را پاک کنید؟
+    </string>
     <string name="delete_threads_question">واقعا می‌‌خواهید <b>همه پیام‌ها</b> را پاک کنید؟</string>
     <string name="from_">از:</string>
     <string name="to_">به:</string>
@@ -233,4 +236,5 @@
     <string name="filter_status_all">پیام ها فیلتر نشده اند.</string>
     <string name="filter_status_filtered">فیلتر پیام ها روشن است.</string>
     <string name="change">تغییر</string>
+    <string name="install_cando">لطفا برنامه کندو را نصب کنید.</string>
 </resources>

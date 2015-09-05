@@ -247,4 +247,5 @@
     <string name="filter_status_all">Messages haven\'t been filtered.</string>
     <string name="filter_status_filtered">Message filtering is on.</string>
     <string name="change">Change</string>
+    <string name="install_cando">Please install Cando market!</string>
 </resources>
