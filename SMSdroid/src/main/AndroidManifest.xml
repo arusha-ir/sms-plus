@@ -17,8 +17,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="ir.arusha.android.sms_plus"
           android:installLocation="internalOnly"
-          android:versionCode="4"
-          android:versionName="1.0.3.rc"
+          android:versionCode="5"
+          android:versionName="1.0.4.rc"
           android:supportsRtl="true">
     <supports-screens
             android:anyDensity="true"
