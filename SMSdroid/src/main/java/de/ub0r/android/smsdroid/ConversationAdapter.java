@@ -31,6 +31,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
@@ -140,6 +141,15 @@ public class ConversationAdapter extends ResourceCursorAdapter {
             });
         }
         // startMsgListQuery();
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        try {
+            return super.getView(position, convertView, parent);
+        } catch (Exception exp) {
+            return convertView;
+        }
     }
 
     /**

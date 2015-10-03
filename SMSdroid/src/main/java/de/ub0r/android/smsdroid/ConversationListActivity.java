@@ -234,6 +234,8 @@ public final class ConversationListActivity extends SherlockActivity implements
                         Conversation.flushCache();
                         Message.flushCache();
                         SmsReceiver.updateNewMessageNotification(context, null);
+                        if (activity != null && activity instanceof ConversationListActivity)
+                            ((ConversationListActivity) activity).restartActivity();
                     }
                 } catch (IllegalArgumentException e) {
                     Log.e(TAG, "Argument Error", e);
