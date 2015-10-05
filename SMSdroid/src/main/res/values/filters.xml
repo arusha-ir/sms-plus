@@ -10,7 +10,7 @@
     </string-array>
 
     <string-array name="filters">
-        <item>(?=(^.{11,20}$))(^\\d+$)</item>
+        <item>(?=(^.{11}$))(^09\\d+$)</item>
     </string-array>
 
     <string-array name="whiteNumbers">

@@ -56,6 +56,7 @@
         <item name="android:background">@drawable/bg_striped</item>
         <item name="backgroundSplit">@drawable/bg_striped_split</item>
         <item name="android:backgroundSplit">@drawable/bg_striped_split</item>
+        <item name="android:subtitleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
     </style>
 
     <style name="Widget.Styled.ActionBar_Light" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
@@ -63,6 +64,11 @@
         <item name="android:background">@drawable/bg_striped</item>
         <item name="backgroundSplit">@drawable/bg_striped_split</item>
         <item name="android:backgroundSplit">@drawable/bg_striped_split</item>
+        <item name="android:subtitleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
+    </style>
+
+    <style name="MyTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">#ffffff</item>
     </style>
 
 </resources>
